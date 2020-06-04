@@ -1,0 +1,78 @@
+* {
+  position: relative;
+  outline: none;
+  @include remove-padding-margin;
+  box-sizing: inherit;
+}
+
+
+
+body {
+  box-sizing: border-box;
+  @include remove-padding-margin;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+span, strong, b, label {
+  display: block;
+}
+
+p {
+  span, strong, b { display: inline-block }
+}
+
+ul {
+  list-style: none;
+  @include remove-padding-margin;
+}
+
+input, textarea {
+  border: none;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: none;
+  -webkit-text-fill-color: transparent;
+  -webkit-box-shadow: 0 0 0 1000px #000 inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active  {
+  -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+}
+
+/*Change text in autofill textbox*/
+input:-webkit-autofill {
+  -webkit-text-fill-color: inherit !important;
+}
+

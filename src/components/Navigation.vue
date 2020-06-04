@@ -1,9 +1,9 @@
 <template>
-  <main></main>
+  <nav></nav>
 </template>
 
 <script>
 export default {
-  name: "Home",
+  name: "Navigation",
 };
 </script>

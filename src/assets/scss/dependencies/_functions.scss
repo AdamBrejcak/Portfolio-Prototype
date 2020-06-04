@@ -1,0 +1,15 @@
+@function columnsToPercentage($columns) {
+  @return $columns / $ALL_COLUMNS * 100%;
+}
+
+@function pxToRem($pixels) {
+  @return $pixels / 16 + rem;
+}
+
+@function remToPx($rems) {
+  @return $rems * 16 + px;
+}
+
+@function stripUnits($number) {
+  @return $number / ($number * 0 + 1);
+}

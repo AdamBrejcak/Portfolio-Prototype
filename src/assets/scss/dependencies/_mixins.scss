@@ -1,0 +1,173 @@
+//
+// PADDING AND MARGIN
+//
+@mixin remove-padding-margin {
+  margin: 0;
+  padding: 0;
+}
+
+@mixin marginRight($value) {
+  margin-right: $value;
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+@mixin marginBottom($value) {
+  margin-bottom: $value;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+@mixin marginLeft($value) {
+  margin-left: $value;
+
+  &:last-child {
+    margin-left: 0;
+  }
+}
+
+@mixin marginTop($value) {
+  margin-top: $value;
+
+  &:last-child {
+    margin-top: 0;
+  }
+}
+
+@mixin paddingRight($value) {
+  padding-right: $value;
+
+  &:last-child {
+    padding-right: 0;
+  }
+}
+
+@mixin paddingBottom($value) {
+  padding-bottom: $value;
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+}
+
+@mixin paddingLeft($value) {
+  padding-left: $value;
+
+  &:last-child {
+    padding-left: 0;
+  }
+}
+
+@mixin paddingTop($value) {
+  padding-top: $value;
+
+  &:last-child {
+    padding-top: 0;
+  }
+}
+
+//
+// Width and height
+//
+@mixin sameWidhtHeight($value, $rounded: false) {
+  width: $value;
+  height: $value;
+
+  @if $rounded {
+    border-radius: 50%;
+  }
+};
+
+@mixin layoutContainer($width_size, $increase_breakpoint: 100) {
+  .container-#{$width_size} {
+    width: $width_size + px;
+
+    @media (max-width: ($width_size + $increase_breakpoint + px)) {
+      width: 90%;
+    }
+  }
+}
+
+//
+// POSITIONS
+//
+@mixin sameTopLeft($value) {
+  top: $value;
+  left: $value;
+};
+
+@mixin sameTopRight($value) {
+  top: $value;
+  right: $value;
+};
+
+@mixin sameBottomRight($value) {
+  bottom: $value;
+  right: $value;
+};
+
+@mixin sameBottomLeft($value) {
+  bottom: $value;
+  left: $value;
+};
+
+@mixin transformCenter() {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin transformCenterX() {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@mixin transformCenterY() {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+//
+// FLEXBOX
+//
+@mixin fCenter() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+//
+// TRANSISTIONS
+//
+@mixin makeTransitionDelay($element_count, $stagger: 0.15, $start_delay: 0) {
+  @for $index from 2 through $element_count {
+    &:nth-child(#{$index}) {
+      transition-delay: $start_delay + ($stagger * ($index - 1) + s);
+    }
+  }
+}
+
+//
+// OTHER
+//
+@mixin bgSettings() {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+@mixin basicReset() {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+@mixin initBeforeAfter() {
+  content: "";
+  display: block;
+  position: absolute;
+}
