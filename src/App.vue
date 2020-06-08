@@ -5,8 +5,13 @@
 </template>
 
 <script>
+import { getSections } from "./store";
+
 export default {
   name: "App",
+  created() {
+    getSections();
+  },
 };
 </script>
 
