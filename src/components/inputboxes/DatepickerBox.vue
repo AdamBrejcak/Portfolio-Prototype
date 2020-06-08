@@ -1,0 +1,45 @@
+<template>
+  <div>
+    <input
+      type="date"
+      :value="getter"
+      @input="setter($event.target.value)"
+      v-attr="attrs"
+    >
+  </div>
+</template>
+
+<script>
+export default {
+  name: "InputBox",
+  props: [
+    "attrs",
+    "value",
+  ],
+  computed: {
+    getter() {
+      const { value } = this;
+      if (value) {
+        let month = value.getMonth() + 1;
+        month = month <= 9 ? `0${month}` : month;
+
+        let day = value.getDate();
+        day = day <= 9 ? `0${day}` : day;
+
+        return `${value.getFullYear()}-${month}-${day}`;
+      }
+      return null;
+    },
+  },
+  methods: {
+    setter(stringDate) {
+      if (stringDate) {
+        const date = new Date(stringDate);
+        this.$emit("input", date);
+      } else {
+        this.$emit("input", null);
+      }
+    },
+  },
+};
+</script>
