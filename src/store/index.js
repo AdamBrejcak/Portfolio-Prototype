@@ -6,8 +6,7 @@ import DB from "../firebaseInit";
 // STATE
 //
 export const store = Vue.observable({
-  loading: false,
-  loadingProgress: 0,
+  loadingText: null,
   sections: [],
 });
 
@@ -21,14 +20,13 @@ export const getters = {
 //
 // METHODS
 //
-
 /*
 *  Dotiahne vsetky sekcie staci spustit raz na zaciatku inicializacie stranky.
 *  Potom su vsetky sekcie ulozene v store.
 * */
 export const getSections = async () => {
   try {
-    store.loading = true;
+    store.loadingText = "Loading...";
 
     const sectionsRef = await DB
       .collection("section")
@@ -39,20 +37,20 @@ export const getSections = async () => {
       ...doc.data(),
     }));
 
-    store.loading = false;
+    store.loadingText = null;
   } catch (err) {
     console.error(err);
-    store.loading = false;
+    store.loadingText = null;
   }
 };
 
 /** *
 *  Prida novu sekciu do databazy. BEZ UPLOADU!!!
-*  @argument 1 = request sekcie, ktory ide do DB.
+*  @argument1 = request sekcie, ktory ide do DB.
 * */
 export const addSection = async (request) => {
   try {
-    store.loading = true;
+    store.loadingText = "Saving...";
 
     const docRef = await DB
       .collection("section")
@@ -63,7 +61,7 @@ export const addSection = async (request) => {
       ...request,
     });
 
-    store.loading = false;
+    store.loadingText = null;
   } catch (err) {
     console.error(err);
   }
@@ -71,11 +69,11 @@ export const addSection = async (request) => {
 
 /** *
 *  Upravy sekciu. BEZ UPLOADU!!!
-*  @argument 1 = request sekcie, ktory ide do DB s ID sekcie.
+*  @argument1 = request sekcie, ktory ide do DB s ID sekcie.
 * */
 export const updateSection = async (request) => {
   try {
-    store.loading = true;
+    store.loadingText = "Updating...";
 
     const { id } = request;
     const edittedRequest = request;
@@ -91,6 +89,7 @@ export const updateSection = async (request) => {
 
     store.sections[index] = request;
   } catch (err) {
+    store.loadingText = null;
     console.error(err);
   }
 };
@@ -99,41 +98,39 @@ export const updateSection = async (request) => {
 *  Upload file do google cloud storegu.
 *  Ak prebehne vsetko v poriadku funkcia vrati Promise, ktory po dokonceni vrati URL.
 *  Ak nastane error vrati undefined
-*  @argument 1 = cesta v store kde sa ma ulozit.
-*  @argument 2 = file
+*  @argument1 = cesta v store kde sa ma ulozit.
+*  @argument2 = file
 * */
-export const uploadFile = (path, file) => {
+export const uploadFile = (path, file) => { // eslint-disable-line
   try {
-    store.loading = true;
+    store.loadingText = "Uploading...";
     const storageRef = firebase.storage().ref(path);
     const task = storageRef.put(file);
 
     return new Promise((resolve) => {
       task.on(
         "state_changed",
-        (snapshot) => {
-          store.loadingProgress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        },
+        () => {},
         () => {
-          store.loading = false;
+          store.loadingText = null;
           console.error("Nepodarilo sa uploadnut fotku");
         },
         () => {
           storageRef.getDownloadURL()
             .then((url) => {
-              store.loading = false;
-              store.loadingProgress = 0;
+              store.loadingText = null;
               resolve(url);
             })
             .catch((err) => {
               console.error(err);
-              store.loading = false;
+              store.loadingText = null;
             });
         },
       );
     });
   } catch (err) {
     console.error(err);
+    store.loadingText = null;
     return undefined;
   }
 };

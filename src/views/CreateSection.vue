@@ -47,6 +47,8 @@
     </ul>
 
     <button @click="addSection">Vytvoriť sekciu</button>
+
+    <loader></loader>
   </main>
 </template>
 
@@ -55,6 +57,7 @@ import { v1 as uuidv1 } from "uuid";
 import InputBox from "../components/inputboxes/InputBox.vue";
 import FileBox from "../components/inputboxes/FileBox.vue";
 import DatepickerBox from "../components/inputboxes/DatepickerBox.vue";
+import Loader from "../components/Loader.vue";
 import { addSection, uploadFile } from "../store";
 import { removeDiacritics } from "../utils/string";
 
@@ -64,6 +67,7 @@ export default {
     InputBox,
     DatepickerBox,
     FileBox,
+    Loader,
   },
   data() {
     return {
@@ -91,13 +95,18 @@ export default {
       this.description = "";
       this.date = null;
       this.place = "";
+      this.sliderPhotoProgress = 0;
+      this.sliderPhoto = null;
     },
     async addSection() {
       try {
         if (this.errors.length === 0) {
           const sectionStoragePath = removeDiacritics(this.name).split(" ").join("_");
 
-          const sliderPhoto = await uploadFile(`${sectionStoragePath}/${uuidv1()}`, this.sliderPhoto);
+          const sliderPhoto = await uploadFile(
+            `${sectionStoragePath}/${uuidv1()}`,
+            this.sliderPhoto,
+          );
 
           await addSection({
             name: this.name,
@@ -107,6 +116,7 @@ export default {
             photos: [],
             sliderPhoto,
           });
+
           this.resetForm();
         } else {
           this.showValidations = true;
