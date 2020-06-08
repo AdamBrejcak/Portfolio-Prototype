@@ -34,6 +34,11 @@
       }"
     ></input-box>
 
+    <!-- Miesto -->
+    <file-box
+      v-model="sliderPhoto"
+    ></file-box>
+
     <ul v-if="showValidations">
       <li
         v-for="(error, index) in errors"
@@ -46,15 +51,19 @@
 </template>
 
 <script>
+import { v1 as uuidv1 } from "uuid";
 import InputBox from "../components/inputboxes/InputBox.vue";
+import FileBox from "../components/inputboxes/FileBox.vue";
 import DatepickerBox from "../components/inputboxes/DatepickerBox.vue";
-import { addSection } from "../store";
+import { addSection, uploadFile } from "../store";
+import { removeDiacritics } from "../utils/string";
 
 export default {
   name: "CreateSection",
   components: {
     InputBox,
     DatepickerBox,
+    FileBox,
   },
   data() {
     return {
@@ -63,13 +72,15 @@ export default {
       date: null,
       place: "",
       showValidations: false,
+      sliderPhoto: null,
     };
   },
   computed: {
     errors() {
       const errors = [];
       if (this.name.length === 0) errors.push("Meno je povinný údaj.");
-      if (!this.date) errors.push("Dátum je poivinný údaj");
+      if (!this.date) errors.push("Dátum je poivinný údaj.");
+      if (!this.sliderPhoto) errors.push("Uploadnite slider fotografiu.");
       return errors;
     },
   },
@@ -84,13 +95,17 @@ export default {
     async addSection() {
       try {
         if (this.errors.length === 0) {
+          const sectionStoragePath = removeDiacritics(this.name).split(" ").join("_");
+
+          const sliderPhoto = await uploadFile(`${sectionStoragePath}/${uuidv1()}`, this.sliderPhoto);
+
           await addSection({
             name: this.name,
             description: this.description,
             date: this.date,
             place: this.place,
             photos: [],
-            sliderPhoto: "",
+            sliderPhoto,
           });
           this.resetForm();
         } else {

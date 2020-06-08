@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: "InputBox",
+  name: "DatepickerBox",
   props: [
     "attrs",
     "value",
