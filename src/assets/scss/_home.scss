@@ -1,0 +1,42 @@
+@mixin wrapper() {
+  @include sameWidhtHeight(100%);
+  @include sameTopLeft(0);
+}
+
+#home {
+  position: fixed;
+  @include wrapper();
+
+  .slider {
+    @include wrapper();
+
+    .slide {
+      position: absolute;
+      @include wrapper();
+      @include fCenter();
+
+      .background-holder {
+        position: absolute;
+        @include wrapper();
+        transition: all 8s ease;
+
+        .background {
+          @include wrapper();
+          @include bgSettings();
+          opacity: 0;
+          transition: all 2s ease;
+        }
+      }
+
+      &.slide-show {
+        .background-holder {
+          transform: scale(1.15);
+
+          .background {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+}

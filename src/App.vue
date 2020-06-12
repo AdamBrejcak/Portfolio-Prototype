@@ -7,6 +7,7 @@
 <script>
 import { getSections } from "./store";
 import "./directives";
+import "./filters";
 
 export default {
   name: "App",

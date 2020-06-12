@@ -110,7 +110,10 @@ export const uploadFile = (path, file) => { // eslint-disable-line
     return new Promise((resolve) => {
       task.on(
         "state_changed",
-        () => {},
+        (snapshot) => {
+          const percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log(`${percentage.toFixed(0)}%`);
+        },
         () => {
           store.loadingText = null;
           console.error("Nepodarilo sa uploadnut fotku");

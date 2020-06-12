@@ -2,13 +2,19 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import All from "../views/All.vue";
 import CreateSection from "../views/CreateSection.vue";
+import Home from "../views/Home.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    name: "All",
+    name: "Home",
     path: "/",
+    component: Home,
+  },
+  {
+    name: "All",
+    path: "/portfolio",
     component: All,
   },
   {
