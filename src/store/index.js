@@ -7,6 +7,7 @@ import DB from "../firebaseInit";
 //
 const store = Vue.observable({
   loadingText: null,
+  dbLoaded: false,
   sections: [],
 });
 

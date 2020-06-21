@@ -7,7 +7,7 @@
 
 <script>
 // import Navigation from "./components/Navigation.vue";
-import { getSections } from "./store";
+import { getSections, getters } from "./store";
 import "./directives";
 import "./filters";
 
@@ -16,8 +16,12 @@ export default {
   components: {
     // Navigation,
   },
+  computed: {
+    ...getters,
+  },
   async created() {
     await getSections();
+    this.store.dbLoaded = true;
   },
 };
 </script>
