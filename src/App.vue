@@ -1,22 +1,23 @@
 <template>
   <div id="app">
-    <navigation />
+<!--    <navigation />-->
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Navigation from "./components/Navigation.vue";
+// import Navigation from "./components/Navigation.vue";
 import { getSections } from "./store";
 import "./directives";
 import "./filters";
 
 export default {
   name: "App",
-  created() {
-    getSections();
-  },
   components: {
-    Navigation,
+    // Navigation,
+  },
+  async created() {
+    await getSections();
   },
 };
 </script>

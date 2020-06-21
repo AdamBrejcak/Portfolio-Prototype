@@ -5,7 +5,7 @@ import DB from "../firebaseInit";
 //
 // STATE
 //
-export const store = Vue.observable({
+const store = Vue.observable({
   loadingText: null,
   sections: [],
 });
@@ -26,8 +26,6 @@ export const getters = {
 * */
 export const getSections = async () => {
   try {
-    store.loadingText = "Loading...";
-
     const sectionsRef = await DB
       .collection("section")
       .get();
@@ -36,11 +34,8 @@ export const getSections = async () => {
       id: doc.id,
       ...doc.data(),
     }));
-
-    store.loadingText = null;
   } catch (err) {
     console.error(err);
-    store.loadingText = null;
   }
 };
 
@@ -50,8 +45,6 @@ export const getSections = async () => {
 * */
 export const addSection = async (request) => {
   try {
-    store.loadingText = "Saving...";
-
     const docRef = await DB
       .collection("section")
       .add(request);
@@ -60,8 +53,6 @@ export const addSection = async (request) => {
       id: docRef.id,
       ...request,
     });
-
-    store.loadingText = null;
   } catch (err) {
     console.error(err);
   }
@@ -73,8 +64,6 @@ export const addSection = async (request) => {
 * */
 export const updateSection = async (request) => {
   try {
-    store.loadingText = "Updating...";
-
     const { id } = request;
     const edittedRequest = request;
     edittedRequest.id = undefined;
@@ -89,7 +78,6 @@ export const updateSection = async (request) => {
 
     store.sections[index] = request;
   } catch (err) {
-    store.loadingText = null;
     console.error(err);
   }
 };
@@ -103,7 +91,6 @@ export const updateSection = async (request) => {
 * */
 export const uploadFile = (path, file) => { // eslint-disable-line
   try {
-    store.loadingText = "Uploading...";
     const storageRef = firebase.storage().ref(path);
     const task = storageRef.put(file);
 
@@ -115,25 +102,21 @@ export const uploadFile = (path, file) => { // eslint-disable-line
           console.log(`${percentage.toFixed(0)}%`);
         },
         () => {
-          store.loadingText = null;
           console.error("Nepodarilo sa uploadnut fotku");
         },
         () => {
           storageRef.getDownloadURL()
             .then((url) => {
-              store.loadingText = null;
               resolve(url);
             })
             .catch((err) => {
               console.error(err);
-              store.loadingText = null;
             });
         },
       );
     });
   } catch (err) {
     console.error(err);
-    store.loadingText = null;
     return undefined;
   }
 };

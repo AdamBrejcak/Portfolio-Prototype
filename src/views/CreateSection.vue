@@ -34,7 +34,7 @@
       }"
     ></input-box>
 
-    <!-- Miesto -->
+    <!-- Fotografia 1 -->
     <file-box
       v-model="sliderPhoto"
     ></file-box>
@@ -58,7 +58,7 @@ import InputBox from "../components/inputboxes/InputBox.vue";
 import FileBox from "../components/inputboxes/FileBox.vue";
 import DatepickerBox from "../components/inputboxes/DatepickerBox.vue";
 import Loader from "../components/Loader.vue";
-import { addSection, uploadFile } from "../store";
+import { getters, addSection, uploadFile } from "../store";
 import { removeDiacritics } from "../utils/string";
 
 export default {
@@ -80,11 +80,12 @@ export default {
     };
   },
   computed: {
+    ...getters,
     errors() {
       const errors = [];
       if (this.name.length === 0) errors.push("Meno je povinný údaj.");
       if (!this.date) errors.push("Dátum je poivinný údaj.");
-      if (!this.sliderPhoto) errors.push("Uploadnite slider fotografiu.");
+      if (!this.sliderPhoto) errors.push("Uploadnite slider fotografie.");
       return errors;
     },
   },
@@ -95,33 +96,35 @@ export default {
       this.description = "";
       this.date = null;
       this.place = "";
-      this.sliderPhotoProgress = 0;
       this.sliderPhoto = null;
     },
     async addSection() {
       try {
         if (this.errors.length === 0) {
-          const sectionStoragePath = removeDiacritics(this.name).split(" ").join("_");
-
+          this.store.loadingText = "Čekaj uploadujem fotku...";
+          const sectionStoragePath = `${removeDiacritics(this.name).split(" ").join("_")}_${uuidv1()}`;
           const sliderPhoto = await uploadFile(
             `${sectionStoragePath}/${uuidv1()}`,
             this.sliderPhoto,
           );
 
-          await addSection({
+          this.store.loadingText = "Teraz ukladám data do databázy ... ešči čekaj chvilku.";
+          addSection({
             name: this.name,
             description: this.description,
             date: this.date,
             place: this.place,
             photos: [],
+            storageRef: sectionStoragePath,
             sliderPhoto,
           });
-
           this.resetForm();
+          this.store.loadingText = null;
         } else {
           this.showValidations = true;
         }
       } catch (err) {
+        this.store.loadingText = null;
         console.error(err);
       }
     },

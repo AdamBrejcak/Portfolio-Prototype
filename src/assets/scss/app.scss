@@ -3,6 +3,11 @@
 @import "./dependencies/mixins";
 @import "./dependencies/reset";
 
-@import "./button";
 @import "./layout";
-@import "./home";
+
+// Views
+@import "./views/home";
+
+// Components
+@import "./components/grid";
+@import "./components/big_slider";

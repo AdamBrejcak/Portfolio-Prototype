@@ -1,58 +1,43 @@
 <template>
   <main id="home">
-    <h1 style="position: absolute; opacity: 0">Deafeye photography</h1>
-    <div class="slider">
-      <div
-        class="slide"
+    <div class="big-slider">
+      <img
+        class="slider-image"
         v-for="(section, index) in store.sections"
-        :key="section.id"
-        :class="{'slide-show': currentSlide === index}"
+        :key="index + 1"
+        :src="section.sliderPhoto"
+        :class="[`slider-image-${index}`]"
       >
-        <div class="background-holder">
-          <div
-            class="background"
-            :style="{backgroundImage: `url(${section.sliderPhoto})`}"
-          ></div>
-        </div>
-
-        <div class="slider-content">
-          <h2>{{section.name}}</h2>
-
-          <span>{{section.date | firestoreTimestampToStringDate}}</span>
-
-          <button>
-            <span>Zobraziť fotografie</span>
-            <router-link :to="`galeria/${getGalleryLink(section.name)}`"></router-link>
-          </button>
-        </div>
-      </div>
     </div>
+
+    <grid></grid>
   </main>
 </template>
 
 <script>
+// Components
+import Grid from "../components/Grid.vue";
+// Store
 import { getters } from "../store";
-import { getGalleryLink } from "../utils/string";
+// Utils
 
 export default {
   name: "Home",
-  computed: {
-    ...getters,
+  components: {
+    Grid,
   },
   data() {
     return {
-      currentSlide: 0,
+      image: 0,
     };
   },
-  methods: {
-    getGalleryLink,
+  computed: {
+    ...getters,
+    currentImage() { return `#home .slider-image-${this.image}`; },
   },
   mounted() {
-    setInterval(() => {
-      const sectionsLength = this.store.sections.length;
-      if (this.currentSlide + 1 === sectionsLength) this.currentSlide = 0;
-      else this.currentSlide += 1;
-    }, 5500);
+    // new this.$TimelineMax()
+    //   .to(this.currentImage, 3, { scale: 1.3 });
   },
 };
 </script>

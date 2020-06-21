@@ -1,11 +1,10 @@
 <template>
   <nav>
     <div class="navigation">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/portfolio">Portfolio</router-link> |
-    <router-link to="/create">Create Section</router-link> |
+    <router-link to="/">Home</router-link>
+    <router-link to="/portfolio">Portfolio</router-link>
+    <router-link to="/create">Create Section</router-link>
     </div>
-    <router-view/>
   </nav>
 </template>
 
