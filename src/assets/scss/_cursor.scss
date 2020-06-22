@@ -1,0 +1,15 @@
+body, * {
+  cursor: none!important;
+}
+
+#cursor {
+  @include sameWidhtHeight(15px);
+  position: absolute;
+  background-color: orange;
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(.17,.67,.35,1.33);
+
+  &.cursor-pointer {
+    transform: scale(2.4);
+  }
+}
