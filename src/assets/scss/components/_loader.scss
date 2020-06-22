@@ -13,8 +13,8 @@ $loader-transition: 1s;
     width: 1px;
     height: 100%;
     position: absolute;
-    transform-origin: center bottom;
-    transition: all $loader-transition ease;
+    transform-origin: center top;
+    transition: all #{$loader-transition / 0.5} ease;
     @include transformCenterX();
 
     &__default, &__progress {
@@ -27,7 +27,7 @@ $loader-transition: 1s;
     &__progress {
       transform-origin: center bottom;
       transform: scale(0);
-      background-color: lighten($BLACK, 30);
+      background-color: lighten($BLACK, 50);
       transition: all $loader-transition ease;
     }
   }
@@ -51,6 +51,7 @@ $loader-transition: 1s;
       @include wrapper();
       background-color: $BLACK;
       transition: all $loader-transition ease;
+      transition-delay: $loader-transition * 0.8;
     }
   }
 

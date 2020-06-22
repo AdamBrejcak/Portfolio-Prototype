@@ -10,6 +10,7 @@ const store = Vue.observable({
   loader: {
     showLoader: true,
     loadingProgress: 0,
+    loaderDone: false,
     dbLoaded: false,
   },
   sections: [],
@@ -21,6 +22,7 @@ const store = Vue.observable({
 export const getters = {
   store() { return store; },
   loader() { return store.loader; },
+  sections() { return store.sections; },
 };
 
 //

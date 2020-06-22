@@ -7,6 +7,7 @@ $vertical_lines: 5;
     $position: #{($column_size * $i) * 1%};
 
     &:nth-child(#{$i}) {
+      transition-delay: random($lines_count) * 0.1s;
       @if $vertical { left: $position}
       @else { top: $position }
     }
@@ -14,24 +15,28 @@ $vertical_lines: 5;
 }
 
 .grid {
+  $self: &;
+
   position: fixed;
   @include sameWidhtHeight(100%);
   @include sameTopLeft(0);
 
-  .vertical, .horizontal {
+  &__vertical, &__horizontal {
     position: absolute;
     @include sameWidhtHeight(100%);
     @include sameTopLeft(0);
-    .line {
+
+    &__line {
       position: absolute;
       transform: scale(0);
       opacity: 0.3;
-      background-color: $WHITE;
+      transition: 1s ease;
+      background-color: rgba($WHITE, 0.5);
     }
   }
 
-  .vertical {
-    .line {
+  &__vertical {
+    &__line {
       top: 0;
       height: 100%;
       width: 1px;
@@ -40,13 +45,22 @@ $vertical_lines: 5;
     }
   }
 
-  .horizontal {
-    .line {
+  &__horizontal {
+    &__line {
       left: 0;
       width: 100%;
       height: 1px;
       transform-origin: left center;
       @include renderGridLinesPosition(false, $horizontal_lines);
+    }
+  }
+
+  // Grid modifications
+  &--show {
+    #{$self}__vertical, #{$self}__horizontal {
+      &__line {
+        transform: scale(1);
+      }
     }
   }
 }

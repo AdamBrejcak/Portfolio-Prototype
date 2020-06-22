@@ -34,9 +34,9 @@
       }"
     ></input-box>
 
-    <!-- Fotografia 1 -->
+    <!-- Fotografia -->
     <file-box
-      v-model="sliderPhoto"
+      v-model="sectionPhoto"
     ></file-box>
 
     <ul v-if="showValidations">
@@ -72,7 +72,7 @@ export default {
       date: null,
       place: "",
       showValidations: false,
-      sliderPhoto: null,
+      sectionPhoto: null,
     };
   },
   computed: {
@@ -81,7 +81,7 @@ export default {
       const errors = [];
       if (this.name.length === 0) errors.push("Meno je povinný údaj.");
       if (!this.date) errors.push("Dátum je poivinný údaj.");
-      if (!this.sliderPhoto) errors.push("Uploadnite slider fotografie.");
+      if (!this.sectionPhoto) errors.push("Uploadnite slider fotografie.");
       return errors;
     },
   },
@@ -92,16 +92,16 @@ export default {
       this.description = "";
       this.date = null;
       this.place = "";
-      this.sliderPhoto = null;
+      this.sectionPhoto = null;
     },
     async addSection() {
       try {
         if (this.errors.length === 0) {
           this.store.loadingText = "Čekaj uploadujem fotku...";
           const sectionStoragePath = `${removeDiacritics(this.name).split(" ").join("_")}_${uuidv1()}`;
-          const sliderPhoto = await uploadFile(
+          const sectionPhoto = await uploadFile(
             `${sectionStoragePath}/${uuidv1()}`,
-            this.sliderPhoto,
+            this.sectionPhoto,
           );
 
           this.store.loadingText = "Teraz ukladám data do databázy ... ešči čekaj chvilku.";
@@ -112,7 +112,7 @@ export default {
             place: this.place,
             photos: [],
             storageRef: sectionStoragePath,
-            sliderPhoto,
+            sectionPhoto,
           });
           this.resetForm();
           this.store.loadingText = null;

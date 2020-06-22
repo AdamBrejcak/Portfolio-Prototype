@@ -74,7 +74,10 @@ export default {
     * Hide loader after animation is done
     * */
     animatePercent(newPercent) {
-      if (newPercent === 100) this.loader.showLoader = false;
+      if (newPercent === 100) {
+        this.loader.showLoader = false;
+        setTimeout(() => { this.loader.loaderDone = true; }, 800);
+      }
     },
   },
 };
