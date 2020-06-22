@@ -26,7 +26,7 @@
     <!-- ------------------ Grid ------------------ -->
     <div
       class="grid"
-      :class="{'grid--show': loader.loaderDone}"
+      :class="{'grid--show': loader.loaderDone && showGrid}"
     >
       <div class="grid__vertical">
         <div class="grid__vertical__line"></div>
@@ -55,12 +55,14 @@ export default {
   data() {
     return {
       activeSection: 0,
-      mouseWheelAllow: true,
+      mouseWheelAllow: false,
+      showGrid: true,
       loadedImages: [],
     };
   },
   computed: {
     ...getters,
+    loaderDone() { return this.loader.loaderDone; },
     /*
     * Calculate loaded percent
     * */
@@ -83,23 +85,26 @@ export default {
     goUp() {
       if (this.activeSection !== 0) {
         if (this.mouseWheelAllow) {
+          this.showGrid = false;
           this.mouseWheelAllow = false;
           this.activeSection -= 1;
-          setTimeout(() => { this.mouseWheelAllow = true; }, 2000);
+          setTimeout(() => { this.showGrid = true; }, 600);
+          setTimeout(() => { this.mouseWheelAllow = true; }, 1700);
         }
       }
     },
     goDown() {
       if (this.activeSection !== this.sections.length - 1) {
         if (this.mouseWheelAllow) {
+          this.showGrid = false;
           this.mouseWheelAllow = false;
           this.activeSection += 1;
-          setTimeout(() => { this.mouseWheelAllow = true; }, 2000);
+          setTimeout(() => { this.showGrid = true; }, 600);
+          setTimeout(() => { this.mouseWheelAllow = true; }, 1700);
         }
       }
     },
     onMouseWheel(event) {
-      console.log("MOUSEWHEEL", event);
       if (event.deltaY < 0) {
         this.goUp();
       } else if (event.deltaY > 0) {
@@ -110,6 +115,9 @@ export default {
   watch: {
     loadedPercent(percent) {
       this.store.loader.loadingProgress = percent;
+    },
+    loaderDone(done) {
+      if (done) this.mouseWheelAllow = true;
     },
   },
   mounted() {
