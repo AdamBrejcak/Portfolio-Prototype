@@ -4,6 +4,7 @@
 @import "./dependencies/reset";
 
 @import "./layout";
+@import "./typography";
 
 // Views
 @import "./views/home";
@@ -11,3 +12,4 @@
 // Components
 @import "./components/grid";
 @import "./components/big_slider";
+@import "./components/loader";

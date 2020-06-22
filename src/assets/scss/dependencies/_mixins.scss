@@ -100,6 +100,12 @@
   left: $value;
 };
 
+@mixin wrapper {
+  position: absolute;
+  @include sameTopLeft(0);
+  @include sameWidhtHeight(100%);
+}
+
 @mixin sameTopRight($value) {
   top: $value;
   right: $value;

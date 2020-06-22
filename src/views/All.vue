@@ -25,6 +25,9 @@ export default {
       console.log(starsRef.getDownloadURL());
     },
   },
+  mounted() {
+    this.loader.loadingProgress = 100;
+  },
 };
 </script>
 <style lang="scss" scoped>

@@ -1,5 +1,6 @@
 <template>
   <main id="home">
+    <!-- ------------------ SLIDER ------------------ -->
     <div class="big-slider">
       <img
         class="slider-image"
@@ -11,22 +12,32 @@
       >
     </div>
 
-    <grid></grid>
+    <!-- ------------------ GRID ------------------ -->
+    <div class="grid">
+      <div class="vertical">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+
+      <div class="horizontal">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+    </div>
   </main>
 </template>
 
 <script>
-// Components
-import Grid from "../components/Grid.vue";
 // Store
 import { getters } from "../store";
 // Utils
 
 export default {
   name: "Home",
-  components: {
-    Grid,
-  },
   data() {
     return {
       image: 0,
@@ -35,36 +46,22 @@ export default {
   },
   computed: {
     ...getters,
-    homeLoaded() {
-      if (this.store.dbLoaded) return this.loadedImages.length === this.store.sections.length;
-      return false;
-    },
-    currentImage() { return `#home .slider-image-${this.image}`; },
-  },
-  methods: {
-    nextSlide() {
-      this.image = this.image === this.store.sections.length - 1 ? 0 : this.image += 1;
-
-      new this.$TimelineMax()
-        .add(() => {
-          // Hide current image
-
-        })
-        .add(() => {
-          // Show next image
-        });
-    },
-    slider() {
-      this.$TweenMax.staggerTo("#home .horizontal .line", 1.5, { scale: 1 }, 0.2);
-      this.$TweenMax.staggerTo("#home .vertical .line", 1.5, { scale: 1 }, 0.2);
-      new this.$TimelineMax()
-        .to(this.currentImage, 2, { opacity: 1 })
-        .to(this.currentImage, 6, { scale: 1.2 }, "-=1.8");
+    loadedPercent() {
+      const { dbLoaded } = this.store.loader;
+      let percent = 0;
+      if (dbLoaded) {
+        percent += 50;
+        const imagesCount = this.store.sections.length;
+        const loadedImagesCount = this.loadedImages.length;
+        percent += (loadedImagesCount / imagesCount / 2) * 100;
+      }
+      return percent;
     },
   },
   watch: {
-    homeLoaded(isLoaded) {
-      if (isLoaded) this.slider();
+    loadedPercent(percent) {
+      this.store.loader.loadingProgress = percent;
+      // if (percent === 100) console.log("HOME PAGE IS LOADED!");
     },
   },
 };

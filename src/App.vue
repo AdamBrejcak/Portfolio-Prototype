@@ -2,18 +2,24 @@
   <div id="app">
 <!--    <navigation />-->
     <router-view></router-view>
+    <loader></loader>
   </div>
 </template>
 
 <script>
+// Components
+import Loader from "./components/Loader.vue";
 // import Navigation from "./components/Navigation.vue";
+// Store
 import { getSections, getters } from "./store";
+// Extenders
 import "./directives";
 import "./filters";
 
 export default {
   name: "App",
   components: {
+    Loader,
     // Navigation,
   },
   computed: {
@@ -21,7 +27,7 @@ export default {
   },
   async created() {
     await getSections();
-    this.store.dbLoaded = true;
+    this.store.loader.dbLoaded = true;
   },
 };
 </script>

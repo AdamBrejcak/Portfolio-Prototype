@@ -1,9 +1,3 @@
-@mixin wrapper {
-  position: absolute;
-  @include sameTopLeft(0);
-  @include sameWidhtHeight(100%);
-}
-
 .big-slider, .slider-image {
   @include wrapper();
 }

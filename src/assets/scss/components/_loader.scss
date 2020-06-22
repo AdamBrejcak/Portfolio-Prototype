@@ -1,0 +1,106 @@
+$loader-transition: 1s;
+
+.loader {
+  $self: &;
+
+  position: fixed;
+  @include sameTopLeft(0);
+  @include sameWidhtHeight(100%);
+  z-index: 3000;
+  transition-delay: $loader-transition;
+
+  &__vertical-line {
+    width: 1px;
+    height: 100%;
+    position: absolute;
+    transform-origin: center bottom;
+    transition: all $loader-transition ease;
+    @include transformCenterX();
+
+    &__default, &__progress {
+      position: absolute;
+      @include wrapper();
+    }
+
+    &__default { background-color: lighten($BLACK, 5) }
+
+    &__progress {
+      transform-origin: center bottom;
+      transform: scale(0);
+      background-color: lighten($BLACK, 30);
+      transition: all $loader-transition ease;
+    }
+  }
+
+  &__left-side, &__right-side {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+
+    &__progress {
+      font-size: 96px;
+      position: absolute;
+      top: 50%;
+      opacity: 0;
+      transition: all $loader-transition ease;
+    }
+
+    &__background {
+      @include wrapper();
+      background-color: $BLACK;
+      transition: all $loader-transition ease;
+    }
+  }
+
+  &__left-side {
+    left: 0;
+
+    &__progress {
+      right: 0;
+      transform: translate(50%, -50%) scale(0);
+      &--show {
+        opacity: 1;
+        transform-origin: right center;
+        transform: translate(50%, -50%) scale(1);
+      }
+    }
+  }
+
+  &__right-side {
+    right: 0;
+
+    &__progress {
+      left: 0;
+      transform: translate(-55%, -40%) scale(0);
+      &--show {
+        opacity: 1;
+        transform-origin: left center;
+        transform: translate(-55%, -40%) scale(1);
+      }
+    }
+  }
+
+  // LOADER MODIFICATIONS
+  &--hide {
+    visibility: hidden;
+    pointer-events: none;
+
+    #{$self}__vertical-line {
+      transform: translateX(-50%) scale(0);
+    }
+
+    #{$self}__left-side {
+      &__background {
+        transform: translateX(-100%);
+      }
+    }
+
+    #{$self}__right-side {
+      &__background {
+        transform: translateX(100%);
+      }
+    }
+  }
+}

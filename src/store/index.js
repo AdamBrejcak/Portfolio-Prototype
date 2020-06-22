@@ -6,8 +6,12 @@ import DB from "../firebaseInit";
 // STATE
 //
 const store = Vue.observable({
-  loadingText: null,
-  dbLoaded: false,
+  // Loader settings
+  loader: {
+    showLoader: true,
+    loadingProgress: 0,
+    dbLoaded: false,
+  },
   sections: [],
 });
 
@@ -16,6 +20,7 @@ const store = Vue.observable({
 //
 export const getters = {
   store() { return store; },
+  loader() { return store.loader; },
 };
 
 //
