@@ -44,10 +44,39 @@
     </div>
 
     <!-- ------------------ Section content ------------------ -->
-    <div class="home-content">
-      <h2>
-        <span>Adam a Klaudia</span>
-      </h2>
+    <div class="content-holder">
+      <div
+        class="headline-holder"
+        :class="{'headline-holder--show': loader.loaderDone}"
+      >
+        <h2
+          class="headline-holder__headline"
+          v-for="(section, index) in sections"
+          :key="index + 1"
+          :class="{
+          'headline-holder__headline--down':
+            activeSection !== section.order && activeSection < section.order,
+          'headline-holder__headline--up':
+            activeSection !== section.order && activeSection > section.order
+        }"
+        >
+        <span
+          class="headline-holder__headline__char"
+          v-for="(char, index) in splitText(section.name)"
+          :key="index + 1"
+        >{{char}}</span>
+        </h2>
+      </div>
+
+      <p
+        class="date-holder__date"
+        v-for="(section, index) in sections"
+        :key="index + 1"
+      >
+          <span
+            class="headline-holder__headline__char"
+          >{{section.dateString}}</span>
+      </p>
     </div>
   </main>
 </template>
@@ -86,6 +115,7 @@ export default {
     },
   },
   methods: {
+    splitText(name) { return [...name]; },
     isActiveSection(order) {
       return this.loader.loaderDone && order === this.activeSection;
     },

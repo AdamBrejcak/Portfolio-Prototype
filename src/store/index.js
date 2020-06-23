@@ -1,6 +1,7 @@
 import Vue from "vue";
 import firebase from "firebase";
 import DB from "../firebaseInit";
+import { svkDateStringFromFsTimestamp } from "../utils/string";
 
 //
 // STATE
@@ -38,10 +39,14 @@ export const getSections = async () => {
       .collection("section")
       .get();
 
-    store.sections = sectionsRef.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    store.sections = sectionsRef.docs.map((doc) => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        dateString: svkDateStringFromFsTimestamp(data.date),
+        ...doc.data(),
+      };
+    });
   } catch (err) {
     console.error(err);
   }
