@@ -1,5 +1,8 @@
-// Holder 1s
-// Grid 1.6s
+$horizontal_lines: 3;
+$vertical_lines: 5;
+
+$vertical_part: 100 / ($vertical_lines + 1);
+$horizontal_part: 100 / ($horizontal_lines + 1);
 
 .home {
   position: fixed;
@@ -7,7 +10,7 @@
   @include sameWidhtHeight(100%);
 }
 
-.photos {
+.home-photos {
   @include wrapper();
 
   &__holder {
@@ -35,4 +38,11 @@
       }
     }
   }
+}
+
+.home-content {
+  @include transformCenter();
+  position: fixed;
+  width: #{4% * $vertical_part};
+  height: #{2% * $horizontal_part};
 }

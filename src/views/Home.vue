@@ -1,20 +1,20 @@
 <template>
   <main class="home">
     <!-- ------------------ Section photos ------------------ -->
-    <div class="photos">
+    <div class="home-photos">
       <div
-        class="photos__holder"
+        class="home-photos__holder"
         :style="{
           height: `${sections.length * 100}%`,
           transform: `translateY(${-(100 / sections.length) * activeSection}%)`
         }"
       >
         <div
-          class="photos__holder__image"
+          class="home-photos__holder__image"
           v-for="(section, index) in sections"
           :key="index + 1"
           :class="{
-            'photos__holder__image--active': isActiveSection(section.order)
+            'home-photos__holder__image--active': isActiveSection(section.order)
           }"
           :style="{order: section.order}"
         >
@@ -41,6 +41,13 @@
         <div class="grid__horizontal__line"></div>
         <div class="grid__horizontal__line"></div>
       </div>
+    </div>
+
+    <!-- ------------------ Section content ------------------ -->
+    <div class="home-content">
+      <h2>
+        <span>Adam a Klaudia</span>
+      </h2>
     </div>
   </main>
 </template>

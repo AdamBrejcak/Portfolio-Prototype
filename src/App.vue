@@ -1,21 +1,24 @@
 <template>
   <div id="app">
-<!--    <navigation />-->
+    <!-- ------------------ Web content ------------------ -->
     <router-view></router-view>
 
-    <div id="cursor"></div>
-
+    <!-- ------------------ Page loader ------------------ -->
     <loader></loader>
 
+    <!-- ------------------ Cursor ------------------ -->
+    <div class="cursor-follower select-off"></div>
+    <div class="cursor select-off"></div>
   </div>
 </template>
 
 <script>
 // Components
 import Loader from "./components/Loader.vue";
-// import Navigation from "./components/Navigation.vue";
 // Store
 import { getSections, getters } from "./store";
+// Utils
+import cursor from "./utils/cursor";
 // Extenders
 import "./directives";
 import "./filters";
@@ -24,7 +27,6 @@ export default {
   name: "App",
   components: {
     Loader,
-    // Navigation,
   },
   computed: {
     ...getters,
@@ -34,13 +36,10 @@ export default {
     this.store.loader.dbLoaded = true;
   },
   mounted() {
-    const cursor = document.getElementById("cursor");
-    window.addEventListener("mousemove", (event) => {
-      if (event.target.classList.contains("cursor-pointer")) cursor.classList.add("cursor-pointer");
-      else cursor.classList.remove("cursor-pointer");
-      cursor.style.top = `${event.pageY - 7.5}px`;
-      cursor.style.left = `${event.pageX - 7.5}px`;
-    });
+    /*
+    * Initialization cursor
+    * */
+    cursor();
   },
 };
 </script>

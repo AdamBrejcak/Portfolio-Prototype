@@ -2,14 +2,27 @@ body, * {
   cursor: none!important;
 }
 
-#cursor {
-  @include sameWidhtHeight(15px);
-  position: absolute;
-  background-color: orange;
-  border-radius: 50%;
-  transition: all 0.3s cubic-bezier(.17,.67,.35,1.33);
+.cursor {
+  position: fixed;
+  background-color: #fafafa;
+  width: 6px;
+  height: 6px;
+  border-radius: 100%;
+  z-index: 10000;
+  transform: scale(1);
+  pointer-events: none;
+  user-select: none;
+}
 
-  &.cursor-pointer {
-    transform: scale(2.4);
-  }
+.cursor-follower {
+  position: fixed;
+  background-color: rgba(255, 165, 0, 0.70);
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  transition: .6s cubic-bezier(.75,-1.27,.3,2.33) transform,.2s cubic-bezier(.75,-.27,.3,1.33) opacity,.2s cubic-bezier(.75,-.27,.3,1.33) background-color;
+  z-index: 10000;
+  transform: translate(5px,5px);
+  pointer-events: none;
+  user-select: none;
 }
