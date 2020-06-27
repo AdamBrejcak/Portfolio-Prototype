@@ -45,6 +45,7 @@
 
     <!-- ------------------ Section content ------------------ -->
     <div class="content-holder">
+      <!-- ------------------ Headline ------------------ -->
       <div
         class="headline-holder"
         :class="{'headline-holder--show': loader.loaderDone}"
@@ -68,26 +69,41 @@
         </h2>
       </div>
 
-      <p
-        class="date-holder__date"
-        v-for="(section, index) in sections"
-        :key="index + 1"
-      >
-          <span
-            class="headline-holder__headline__char"
-          >{{section.dateString}}</span>
-      </p>
+      <!-- ------------------ Date ------------------ -->
+      <div class="date-holder">
+        <div
+          class="date-holder__slider"
+          :style="{transform: `translateY(-${(100 / sections.length) * activeSection}%)`}"
+        >
+          <p
+            v-for="(section, index) in sections"
+            :key="index + 1"
+          >{{section.dateString}}</p>
+        </div>
+      </div>
+
+      <button class="a" v-pointer>
+        <span>Otvoriť</span>
+        <router-link  to="galeria/daniel-a-kristina"></router-link>
+      </button>
     </div>
+
+    <!-- ------------------ Social links ------------------ -->
+    <social></social>
   </main>
 </template>
 
 <script>
 // Store
 import { getters } from "../store";
-// Utils
+// Components
+import Social from "../components/Social.vue";
 
 export default {
   name: "Home",
+  components: {
+    Social,
+  },
   data() {
     return {
       activeSection: 0,
@@ -142,11 +158,8 @@ export default {
       }
     },
     onMouseWheel(event) {
-      if (event.deltaY < 0) {
-        this.goUp();
-      } else if (event.deltaY > 0) {
-        this.goDown();
-      }
+      if (event.deltaY < 0) this.goUp();
+      else if (event.deltaY > 0) this.goDown();
     },
   },
   watch: {

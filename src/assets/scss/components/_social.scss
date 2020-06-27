@@ -1,0 +1,32 @@
+$horizontal_lines: 3;
+$vertical_lines: 5;
+
+$vertical_part: 100 / ($vertical_lines + 1);
+$horizontal_part: 100 / ($horizontal_lines + 1);
+
+.instagram-holder, .facebook-holder {
+  position: fixed;
+  @include fCenter();
+  width: 50px;
+  height: $horizontal_part * 1%;
+  transition: all .4s ease;
+
+  &__text {
+    font-family: "Roboto", sans-serif;
+    transform: rotate(-90deg);
+    letter-spacing: 5px;
+  }
+
+  &:hover {
+    opacity: 0.5;
+  }
+}
+
+.facebook-holder {
+  @include sameBottomLeft(0);
+}
+
+.instagram-holder {
+  bottom: $horizontal_part * 1%;
+  left: 0;
+}

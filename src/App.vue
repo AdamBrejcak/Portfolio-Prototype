@@ -4,6 +4,9 @@
     <router-view></router-view>
 
     <!-- ------------------ Page loader ------------------ -->
+    <navigation></navigation>
+
+    <!-- ------------------ Page loader ------------------ -->
     <loader></loader>
 
     <!-- ------------------ Cursor ------------------ -->
@@ -15,6 +18,7 @@
 <script>
 // Components
 import Loader from "./components/Loader.vue";
+import Navigation from "./components/Navigation.vue";
 // Store
 import { getSections, getters } from "./store";
 // Utils
@@ -27,6 +31,7 @@ export default {
   name: "App",
   components: {
     Loader,
+    Navigation,
   },
   computed: {
     ...getters,

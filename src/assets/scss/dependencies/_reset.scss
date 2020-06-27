@@ -4,6 +4,7 @@
   @include remove-padding-margin;
   box-sizing: inherit;
   font-family: inherit;
+  color: inherit;
 }
 
 body {
@@ -36,6 +37,8 @@ input, textarea {
 button {
   background-color: transparent;
   border: none;
+  color: inherit;
+  font-family: inherit;
 }
 
 input:-webkit-autofill,

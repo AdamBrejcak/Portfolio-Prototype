@@ -1,27 +1,19 @@
 <template>
-  <nav>
-    <div class="navigation">
-    <router-link to="/">Home</router-link>
-    <router-link to="/portfolio">Portfolio</router-link>
-    <router-link to="/create">Create Section</router-link>
-    </div>
+  <nav class="navigation">
+    <router-link class="navigation__logo" to="/">
+      <logo></logo>
+      <span class="navigation__logo__text">DEAFEYE</span>
+    </router-link>
   </nav>
 </template>
 
 <script>
+import Logo from "./Logo.vue";
+
 export default {
   name: "Navigation",
+  components: {
+    Logo,
+  },
 };
 </script>
-
-<style lang="scss" scoped>
-.navigation{
-    margin: 0 auto;
-    font-size: 17px;
-    height: 20px;
-    width: 25%;
-    router-link{
-      width: 33%;
-    }
-  }
-</style>
