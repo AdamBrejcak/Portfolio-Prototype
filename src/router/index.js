@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import { getters } from "../store";
 import All from "../views/All.vue";
 import CreateSection from "../views/CreateSection.vue";
 import Home from "../views/Home.vue";
@@ -26,6 +27,11 @@ const routes = [
 
 const router = new VueRouter({
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  getters.store().darkMode = false;
+  next();
 });
 
 export default router;

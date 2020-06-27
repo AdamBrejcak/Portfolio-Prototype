@@ -7,13 +7,13 @@ import { svkDateStringFromFsTimestamp } from "../utils/string";
 // STATE
 //
 const store = Vue.observable({
-  // Loader settings
   loader: {
     showLoader: true,
     loadingProgress: 0,
     loaderDone: false,
     dbLoaded: false,
   },
+  darkMode: false,
   sections: [],
 });
 

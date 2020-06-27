@@ -15,6 +15,7 @@ $horizontal_part: 100 / ($horizontal_lines + 1);
     font-family: "Roboto", sans-serif;
     transform: rotate(-90deg);
     letter-spacing: 5px;
+    transition: all .6s ease;
   }
 
   &:hover {
@@ -29,4 +30,10 @@ $horizontal_part: 100 / ($horizontal_lines + 1);
 .instagram-holder {
   bottom: $horizontal_part * 1%;
   left: 0;
+}
+
+.dark-mode {
+  .instagram-holder, .facebook-holder {
+    &__text { color: $BLACK; }
+  }
 }

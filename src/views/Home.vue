@@ -26,7 +26,10 @@
     <!-- ------------------ Grid ------------------ -->
     <div
       class="grid"
-      :class="{'grid--show': loader.loaderDone && showGrid}"
+      :class="{
+        'grid--show': loader.loaderDone && showGrid,
+        'grid--dark-mode': store.darkMode,
+      }"
     >
       <div class="grid__vertical">
         <div class="grid__vertical__line"></div>
@@ -58,8 +61,10 @@
           'headline-holder__headline--down':
             activeSection !== section.order && activeSection < section.order,
           'headline-holder__headline--up':
-            activeSection !== section.order && activeSection > section.order
-        }"
+            activeSection !== section.order && activeSection > section.order,
+          'headline-holder__headline--dark-mode': section.darkMode,
+          }"
+          :style="{order: section.order}"
         >
         <span
           class="headline-holder__headline__char"
@@ -78,6 +83,8 @@
           <p
             v-for="(section, index) in sections"
             :key="index + 1"
+            :class="{'dark-mode': section.darkMode}"
+            :style="{order: section.order}"
           >{{section.dateString}}</p>
         </div>
       </div>
@@ -89,7 +96,7 @@
     </div>
 
     <!-- ------------------ Social links ------------------ -->
-    <social></social>
+    <social :class="{'dark-mode': store.darkMode}"></social>
   </main>
 </template>
 
@@ -168,6 +175,10 @@ export default {
     },
     loaderDone(done) {
       if (done) this.mouseWheelAllow = true;
+    },
+    activeSection(sectionIndex) {
+      const foundSection = this.sections.find((section) => section.order === sectionIndex);
+      this.store.darkMode = foundSection?.darkMode;
     },
   },
   mounted() {
