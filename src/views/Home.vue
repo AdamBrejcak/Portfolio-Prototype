@@ -97,6 +97,14 @@
 
     <!-- ------------------ Social links ------------------ -->
     <social :class="{'dark-mode': store.darkMode}"></social>
+
+    <!-- ------------------ Social links ------------------ -->
+    <router-link
+      class="portfolio-link"
+      to="/portfolio"
+      v-pointer
+      :class="{'portfolio-link--dark-mode': store.darkMode}"
+    >PORTFÓLIO</router-link>
   </main>
 </template>
 
@@ -117,6 +125,8 @@ export default {
       mouseWheelAllow: false,
       showGrid: true,
       loadedImages: [],
+      touchStart: 0,
+      distance: 0,
     };
   },
   computed: {
@@ -168,6 +178,19 @@ export default {
       if (event.deltaY < 0) this.goUp();
       else if (event.deltaY > 0) this.goDown();
     },
+    onTouchStart(event) {
+      const swipe = event.touches;
+      this.touchStart = swipe[0].pageY;
+      window.addEventListener("touchmove", this.onTouchMove);
+    },
+    onTouchMove(event) {
+      const contact = event.touches;
+      const touchEnd = contact[0].pageY;
+      this.distance = touchEnd - this.touchStart;
+    },
+    onTouchEnd() {
+      window.removeEventListener("touchmove", this.onTouchMove);
+    },
   },
   watch: {
     loadedPercent(percent) {
@@ -180,12 +203,21 @@ export default {
       const foundSection = this.sections.find((section) => section.order === sectionIndex);
       this.store.darkMode = foundSection?.darkMode;
     },
+    distance(newDistance) {
+      if (newDistance > 50) this.goUp();
+      else if (newDistance < -50) this.goDown();
+    },
   },
   mounted() {
     window.addEventListener("mousewheel", this.onMouseWheel);
+    window.addEventListener("touchstart", this.onTouchStart);
+    window.addEventListener("touchend", this.onTouchEnd);
   },
   destroyed() {
     window.removeEventListener("mousewheel", this.onMouseWheel);
+    window.removeEventListener("touchstart", this.onTouchStart);
+    window.removeEventListener("touchend", this.onTouchEnd);
+    window.removeEventListener("touchmove", this.onTouchMove);
   },
 };
 </script>

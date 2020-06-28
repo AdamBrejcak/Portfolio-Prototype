@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import firebase from "firebase";
 // Components
 import Loader from "./components/Loader.vue";
 import Navigation from "./components/Navigation.vue";
@@ -41,9 +42,9 @@ export default {
     this.store.loader.dbLoaded = true;
   },
   mounted() {
-    /*
-    * Initialization cursor
-    * */
+    const { currentUser } = firebase.auth();
+    if (currentUser) { this.store.isAuth = true; }
+
     cursor();
   },
 };

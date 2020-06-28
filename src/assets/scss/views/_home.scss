@@ -132,3 +132,16 @@ $horizontal_part: 100 / ($horizontal_lines + 1);
     p.dark-mode { color: $DARK_MODE_GRAY; }
   }
 }
+
+.portfolio-link {
+  position: fixed;
+  @include transformCenterX();
+  top: 140px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-size: 22px;
+  letter-spacing: 5px;
+  transition: all .6s ease;
+  &--dark-mode { color: $BLACK }
+  &:hover { color: $ORANGE }
+}

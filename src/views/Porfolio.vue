@@ -12,7 +12,7 @@ import firebase from "firebase";
 import { getters } from "../store";
 
 export default {
-  name: "All",
+  name: "Portfolio",
   computed: {
     ...getters,
   },

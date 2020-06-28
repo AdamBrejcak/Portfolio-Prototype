@@ -13,6 +13,7 @@ const store = Vue.observable({
     loaderDone: false,
     dbLoaded: false,
   },
+  isAuth: false,
   darkMode: false,
   sections: [],
 });

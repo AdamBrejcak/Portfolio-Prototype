@@ -17,4 +17,11 @@ button {
     @include sameWidhtHeight(100%);
     @include sameTopLeft(0);
   }
+
+  &.white-hover {
+    &:hover {
+      background-color: $WHITE;
+      color: $BLACK;
+    }
+  }
 }

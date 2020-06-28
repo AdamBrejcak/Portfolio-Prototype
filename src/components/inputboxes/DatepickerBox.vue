@@ -3,8 +3,8 @@
     <input
       type="date"
       :value="getter"
+      :placeholder="placeholder"
       @input="setter($event.target.value)"
-      v-attr="attrs"
     >
   </div>
 </template>
@@ -15,6 +15,7 @@ export default {
   props: [
     "attrs",
     "value",
+    "placeholder",
   ],
   computed: {
     getter() {
