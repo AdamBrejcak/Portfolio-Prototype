@@ -1,0 +1,10 @@
+.login {
+  @include wrapper();
+  position: fixed;
+  @include fCenter();
+  flex-direction: column;
+  max-width: 280px;
+  @include transformCenterX();
+
+  > * { @include marginBottom(30px); }
+}

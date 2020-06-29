@@ -4,6 +4,9 @@
     <router-view></router-view>
 
     <!-- ------------------ Page loader ------------------ -->
+    <navigation></navigation>
+
+    <!-- ------------------ Page loader ------------------ -->
     <loader></loader>
 
     <!-- ------------------ Cursor ------------------ -->
@@ -13,8 +16,10 @@
 </template>
 
 <script>
+import firebase from "firebase";
 // Components
 import Loader from "./components/Loader.vue";
+import Navigation from "./components/Navigation.vue";
 // Store
 import { getSections, getters } from "./store";
 // Utils
@@ -27,6 +32,7 @@ export default {
   name: "App",
   components: {
     Loader,
+    Navigation,
   },
   computed: {
     ...getters,
@@ -36,9 +42,9 @@ export default {
     this.store.loader.dbLoaded = true;
   },
   mounted() {
-    /*
-    * Initialization cursor
-    * */
+    const { currentUser } = firebase.auth();
+    if (currentUser) { this.store.isAuth = true; }
+
     cursor();
   },
 };

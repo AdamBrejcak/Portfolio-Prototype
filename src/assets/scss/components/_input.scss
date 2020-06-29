@@ -1,0 +1,26 @@
+.input-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-family: "Roboto", sans-serif;
+
+  label {
+    color: $GRAY;
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  input {
+    width: 100%;
+    background-color: transparent;
+    border: 1px solid $GRAY;
+    transition: all .6s ease;
+    padding: 12px 24px;
+  }
+
+  &:focus-within, &:active, &--has-value {
+    input {
+      border-color: $WHITE;
+    }
+  }
+}

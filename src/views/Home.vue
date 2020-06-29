@@ -26,7 +26,10 @@
     <!-- ------------------ Grid ------------------ -->
     <div
       class="grid"
-      :class="{'grid--show': loader.loaderDone && showGrid}"
+      :class="{
+        'grid--show': loader.loaderDone && showGrid,
+        'grid--dark-mode': store.darkMode,
+      }"
     >
       <div class="grid__vertical">
         <div class="grid__vertical__line"></div>
@@ -44,27 +47,86 @@
     </div>
 
     <!-- ------------------ Section content ------------------ -->
-    <div class="home-content">
-      <h2>
-        <span>Adam a Klaudia</span>
-      </h2>
+    <div class="content-holder">
+      <!-- ------------------ Headline ------------------ -->
+      <div
+        class="headline-holder"
+        :class="{'headline-holder--show': loader.loaderDone}"
+      >
+        <h2
+          class="headline-holder__headline"
+          v-for="(section, index) in sections"
+          :key="index + 1"
+          :class="{
+          'headline-holder__headline--down':
+            activeSection !== section.order && activeSection < section.order,
+          'headline-holder__headline--up':
+            activeSection !== section.order && activeSection > section.order,
+          'headline-holder__headline--dark-mode': section.darkMode,
+          }"
+          :style="{order: section.order}"
+        >
+        <span
+          class="headline-holder__headline__char"
+          v-for="(char, index) in splitText(section.name)"
+          :key="index + 1"
+        >{{char}}</span>
+        </h2>
+      </div>
+
+      <!-- ------------------ Date ------------------ -->
+      <div class="date-holder">
+        <div
+          class="date-holder__slider"
+          :style="{transform: `translateY(-${(100 / sections.length) * activeSection}%)`}"
+        >
+          <p
+            v-for="(section, index) in sections"
+            :key="index + 1"
+            :class="{'dark-mode': section.darkMode}"
+            :style="{order: section.order}"
+          >{{section.dateString}}</p>
+        </div>
+      </div>
+
+      <button class="a" v-pointer>
+        <span>Otvoriť</span>
+        <router-link  to="galeria/daniel-a-kristina"></router-link>
+      </button>
     </div>
+
+    <!-- ------------------ Social links ------------------ -->
+    <social :class="{'dark-mode': store.darkMode}"></social>
+
+    <!-- ------------------ Social links ------------------ -->
+    <router-link
+      class="portfolio-link"
+      to="/portfolio"
+      v-pointer
+      :class="{'portfolio-link--dark-mode': store.darkMode}"
+    >PORTFÓLIO</router-link>
   </main>
 </template>
 
 <script>
 // Store
 import { getters } from "../store";
-// Utils
+// Components
+import Social from "../components/Social.vue";
 
 export default {
   name: "Home",
+  components: {
+    Social,
+  },
   data() {
     return {
       activeSection: 0,
       mouseWheelAllow: false,
       showGrid: true,
       loadedImages: [],
+      touchStart: 0,
+      distance: 0,
     };
   },
   computed: {
@@ -86,6 +148,7 @@ export default {
     },
   },
   methods: {
+    splitText(name) { return [...name]; },
     isActiveSection(order) {
       return this.loader.loaderDone && order === this.activeSection;
     },
@@ -112,11 +175,21 @@ export default {
       }
     },
     onMouseWheel(event) {
-      if (event.deltaY < 0) {
-        this.goUp();
-      } else if (event.deltaY > 0) {
-        this.goDown();
-      }
+      if (event.deltaY < 0) this.goUp();
+      else if (event.deltaY > 0) this.goDown();
+    },
+    onTouchStart(event) {
+      const swipe = event.touches;
+      this.touchStart = swipe[0].pageY;
+      window.addEventListener("touchmove", this.onTouchMove);
+    },
+    onTouchMove(event) {
+      const contact = event.touches;
+      const touchEnd = contact[0].pageY;
+      this.distance = touchEnd - this.touchStart;
+    },
+    onTouchEnd() {
+      window.removeEventListener("touchmove", this.onTouchMove);
     },
   },
   watch: {
@@ -126,12 +199,25 @@ export default {
     loaderDone(done) {
       if (done) this.mouseWheelAllow = true;
     },
+    activeSection(sectionIndex) {
+      const foundSection = this.sections.find((section) => section.order === sectionIndex);
+      this.store.darkMode = foundSection?.darkMode;
+    },
+    distance(newDistance) {
+      if (newDistance > 50) this.goUp();
+      else if (newDistance < -50) this.goDown();
+    },
   },
   mounted() {
     window.addEventListener("mousewheel", this.onMouseWheel);
+    window.addEventListener("touchstart", this.onTouchStart);
+    window.addEventListener("touchend", this.onTouchEnd);
   },
   destroyed() {
     window.removeEventListener("mousewheel", this.onMouseWheel);
+    window.removeEventListener("touchstart", this.onTouchStart);
+    window.removeEventListener("touchend", this.onTouchEnd);
+    window.removeEventListener("touchmove", this.onTouchMove);
   },
 };
 </script>
