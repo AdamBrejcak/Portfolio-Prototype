@@ -1,0 +1,31 @@
+.file-box {
+  width: 160px;
+
+  input {
+    visibility: hidden;
+    position: absolute;
+  }
+
+  label {
+    padding: 8px 12px;
+    border: 1px solid $GRAY;
+    text-align: center;
+    font-size: 15px;
+    transition: all .6s ease;
+    border-radius: 4px;
+  }
+
+  &__label, &__name {
+    color: $GRAY;
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  &--uploaded {
+    label {
+      border-color: transparent;
+      background-color: $GREEN;
+      color: $WHITE;
+    }
+  }
+}

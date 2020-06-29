@@ -1,0 +1,67 @@
+.modal {
+  $self: &;
+
+  position: fixed;
+  @include sameBottomRight(40px);
+  background-color: $WHITE;
+  border-radius: 20px;
+  transition: all .6s ease;
+  min-width: 400px;
+  min-height: 500px;
+  width: 30vw;
+  height: calc(100% - 170px);
+  transform: scale(0);
+  transform-origin: right bottom;
+  z-index: 2000;
+  font-family: "Roboto", sans-serif;
+  color: $BLACK;
+
+  &__content {
+    @include sameWidhtHeight(100%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    transition-delay: 0.6s;
+    overflow-x: hidden;
+    overflow-y: auto;
+    &::-webkit-scrollbar { display: none; }
+
+    &__create-section {
+      > * { @include marginBottom(20px); }
+
+      &__validations {
+        margin-left: 20px;
+        color: $RED;
+        list-style: disc;
+        font-size: 14px;
+        > * { @include marginBottom(10px); }
+      }
+    }
+  }
+
+  &__close {
+    position: absolute;
+    @include sameTopLeft(0);
+    z-index: 20;
+    background-color: $RED;
+    @include sameWidhtHeight(50px);
+    @include fCenter();
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    color: $WHITE;
+    font-weight: 700;
+  }
+
+  &--show {
+    box-shadow: -2px 2px 31px 11px rgba($WHITE, 0.1);
+    padding: 30px;
+    transform: scale(1);
+
+    #{$self}__content {
+      opacity: 1;
+      pointer-events: visible;
+    }
+  }
+
+  @media (max-width: 1120px) { display: none; }
+}

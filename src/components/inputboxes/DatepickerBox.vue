@@ -1,5 +1,9 @@
 <template>
-  <div>
+  <div class="input-box">
+    <label>
+      <slot name="label"></slot>
+    </label>
+
     <input
       type="date"
       :value="getter"
