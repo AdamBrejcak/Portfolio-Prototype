@@ -78,7 +78,10 @@
       <div class="date-holder">
         <div
           class="date-holder__slider"
-          :style="{transform: `translateY(-${(100 / sections.length) * activeSection}%)`}"
+          :style="{
+            transform: `translateY(-${(100 / sections.length) * activeSection}%)`,
+            height: `${sections.length * 110}%`
+          }"
         >
           <p
             v-for="(section, index) in sections"
@@ -98,13 +101,74 @@
     <!-- ------------------ Social links ------------------ -->
     <social :class="{'dark-mode': store.darkMode}"></social>
 
-    <!-- ------------------ Social links ------------------ -->
+    <!-- ------------------ Portfolio link ------------------ -->
     <router-link
       class="portfolio-link"
       to="/portfolio"
       v-pointer
       :class="{'portfolio-link--dark-mode': store.darkMode}"
     >PORTFÓLIO</router-link>
+
+    <!-- ------------------ Create section ------------------ -->
+    <button
+      class="button-circle create-section-button"
+      v-pointer
+      v-if="store.isAuth"
+      @click="showCreateModal = true"
+      :class="{'create-section-button--hide': showCreateModal}"
+    >+</button>
+
+    <div
+      class="modal"
+      v-if="store.isAuth"
+      :class="{
+        'modal--show': showCreateModal
+      }"
+    >
+      <div
+        class="modal__close"
+        @click="showCreateModal = false"
+        v-pointer
+      >x</div>
+
+      <div class="modal__content">
+        <create-section
+          v-if="showCreateModal"
+          @close="showCreateModal = false"
+        ></create-section>
+      </div>
+    </div>
+
+    <!-- ------------------ Update section ------------------ -->
+    <span
+      class="update-section-button"
+      v-pointer
+      v-if="store.isAuth"
+      @click="showUpdateModal = true"
+      :class="{'create-section-button--hide': showUpdateModal}"
+    >UPRAVIŤ</span>
+
+    <div
+      class="modal"
+      v-if="store.isAuth"
+      :class="{
+        'modal--show': showUpdateModal
+      }"
+    >
+      <div
+        class="modal__close"
+        @click="showUpdateModal = false"
+        v-pointer
+      >x</div>
+
+      <div class="modal__content">
+        <update-section
+          v-if="showUpdateModal"
+          :activeSection="activeSection"
+          @close="showUpdateModal = false"
+        ></update-section>
+      </div>
+    </div>
   </main>
 </template>
 
@@ -113,11 +177,15 @@
 import { getters } from "../store";
 // Components
 import Social from "../components/Social.vue";
+import CreateSection from "../components/CreateSection.vue";
+import UpdateSection from "../components/UpdateSection.vue";
 
 export default {
   name: "Home",
   components: {
     Social,
+    CreateSection,
+    UpdateSection,
   },
   data() {
     return {
@@ -127,6 +195,8 @@ export default {
       loadedImages: [],
       touchStart: 0,
       distance: 0,
+      showCreateModal: false,
+      showUpdateModal: false,
     };
   },
   computed: {
@@ -153,7 +223,7 @@ export default {
       return this.loader.loaderDone && order === this.activeSection;
     },
     goUp() {
-      if (this.activeSection !== 0) {
+      if (this.activeSection !== 0 && !this.showCreateModal && !this.showUpdateModal) {
         if (this.mouseWheelAllow) {
           this.showGrid = false;
           this.mouseWheelAllow = false;
@@ -164,7 +234,11 @@ export default {
       }
     },
     goDown() {
-      if (this.activeSection !== this.sections.length - 1) {
+      if (
+        this.activeSection !== this.sections.length - 1
+        && !this.showCreateModal
+        && !this.showUpdateModal
+      ) {
         if (this.mouseWheelAllow) {
           this.showGrid = false;
           this.mouseWheelAllow = false;

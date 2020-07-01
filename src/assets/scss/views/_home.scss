@@ -125,7 +125,6 @@ $horizontal_part: 100 / ($horizontal_lines + 1);
   &__slider {
     flex-direction: column;
     @include fCenter();
-    height: 300%;
     width: 100%;
     transition: all .6s ease;
 
@@ -144,4 +143,27 @@ $horizontal_part: 100 / ($horizontal_lines + 1);
   transition: all .6s ease;
   &--dark-mode { color: $BLACK }
   &:hover { color: $ORANGE }
+}
+
+.create-section-button {
+  position: fixed;
+  right: $vertical_part * 1%;
+  bottom: $horizontal_part * 1%;
+  transform: translate(50%, 50%);
+  &--hide { transform: translate(50%, 50%) scale(0); }
+  @media (max-width: 1120px) { display: none!important; }
+}
+
+.update-section-button {
+  position: fixed;
+  top: $horizontal_part * 1%;
+  right: $vertical_part * 1%;
+  transform: translate(-30px, 30px);
+  font-size: 22px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  color: $GRAY;
+  font-family: "Roboto", sans-serif;
+  transition: all .6s ease;
+  &:hover { color: $ORANGE; }
 }

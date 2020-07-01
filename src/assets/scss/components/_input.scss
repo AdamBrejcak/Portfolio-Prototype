@@ -1,4 +1,6 @@
 .input-box {
+  $self: &;
+
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -21,6 +23,16 @@
   &:focus-within, &:active, &--has-value {
     input {
       border-color: $WHITE;
+    }
+  }
+
+  &--white {
+    label { color: $BLACK; }
+
+    &:focus-within, &:active, &.input-box--has-value {
+      input {
+        border-color: $BLACK;
+      }
     }
   }
 }

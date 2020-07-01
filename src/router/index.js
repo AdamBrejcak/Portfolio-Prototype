@@ -3,7 +3,6 @@ import firebase from "firebase";
 import VueRouter from "vue-router";
 import { getters } from "../store";
 import Portfolio from "../views/Porfolio.vue";
-import CreateSection from "../views/CreateSection.vue";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 
@@ -27,11 +26,6 @@ const routes = [
     meta: {
       requiresGuest: true,
     },
-  },
-  {
-    name: "Create Section",
-    path: "/create",
-    component: CreateSection,
   },
 ];
 

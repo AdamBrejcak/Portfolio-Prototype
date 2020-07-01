@@ -79,18 +79,27 @@ export const addSection = async (request) => {
 export const updateSection = async (request) => {
   try {
     const { id } = request;
-    const edittedRequest = request;
-    edittedRequest.id = undefined;
-    delete edittedRequest.id;
+    const editedRequest = request;
+    editedRequest.id = undefined;
+    delete editedRequest.id;
 
     await DB
       .collection("section")
       .doc(id)
-      .set(edittedRequest);
+      .set(editedRequest);
+
+    const sectionRef = await DB
+      .collection("section")
+      .doc(id)
+      .get();
+
+    const response = sectionRef.data();
+    response.dateString = svkDateStringFromFsTimestamp(response.date);
+
+    store.darkMode = response.darkMode;
 
     const index = store.sections.findIndex((section) => section.id === id);
-
-    store.sections[index] = request;
+    Object.assign(store.sections[index], response);
   } catch (err) {
     console.error(err);
   }
