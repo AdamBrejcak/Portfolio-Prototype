@@ -83,6 +83,11 @@ $loader-transition: 1s;
     }
   }
 
+  @supports (-webkit-touch-callout: none) {
+    .loader__left-side__progress { display: none; }
+    .loader__right-side__progress { display: none; }
+  }
+
   // LOADER MODIFICATIONS
   &--hide {
     visibility: hidden;

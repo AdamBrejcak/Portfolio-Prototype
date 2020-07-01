@@ -71,6 +71,12 @@ $horizontal_part: 100 / ($horizontal_lines + 1);
   position: fixed;
   width: #{4% * $vertical_part};
   height: 100%;
+  @include breakpoint-1160 {
+    width: 100%
+  }
+  @include breakpoint-586 {
+    justify-content: flex-start;
+  }
 }
 
 .headline-holder {
@@ -79,17 +85,44 @@ $horizontal_part: 100 / ($horizontal_lines + 1);
   @include fCenter();
   width: 100%;
   height: 140px;
+  @include breakpoint-768 { height: 90px; }
+  @include breakpoint-586 {
+    padding: 0 30px;
+    text-align: center;
+    top: 150px;
+  }
 
   &__headline {
     overflow: hidden;
     font-size: 98px;
     position: absolute;
+    @include breakpoint-1160 { font-size: 72px; }
+    @include breakpoint-768 { font-size: 62px; }
+    @include breakpoint-586 {
+      font-size: 36px;
+      width: 100%;
+    }
+
 
     &__char {
       transform: translateY(100%);
       min-width: 30px;
       transition: all .6s ease;
       @include charsDelay();
+
+      &--mobile {
+        display: none;
+        width: 100%;
+        padding: 0 20px;
+      }
+
+      @include breakpoint-1160 { min-width: 20px; }
+      @include breakpoint-768 {
+        display: none;
+        min-width: 13px;
+        &--mobile { display: inline-block }
+      }
+      @include breakpoint-586 { min-width: 10px; }
     }
 
     &--dark-mode { color: $BLACK }
@@ -121,6 +154,8 @@ $horizontal_part: 100 / ($horizontal_lines + 1);
   overflow: hidden;
   height: 28px;
   margin-bottom: 30px;
+  @include breakpoint-768 { margin-bottom: 20px; }
+  @include breakpoint-586 { display: none; }
 
   &__slider {
     flex-direction: column;
@@ -143,6 +178,7 @@ $horizontal_part: 100 / ($horizontal_lines + 1);
   transition: all .6s ease;
   &--dark-mode { color: $BLACK }
   &:hover { color: $ORANGE }
+  @include breakpoint-586 { top: 100px; }
 }
 
 .create-section-button {
@@ -166,4 +202,16 @@ $horizontal_part: 100 / ($horizontal_lines + 1);
   font-family: "Roboto", sans-serif;
   transition: all .6s ease;
   &:hover { color: $ORANGE; }
+  @media (max-width: 1120px) { display: none!important; }
+}
+
+.open-button {
+  @include breakpoint-586 {
+    position: fixed;
+    @include sameBottomLeft(0);
+    width: 100%;
+    max-width: 100vw;
+    height: 50px;
+    border-radius: 0;
+  }
 }

@@ -18,7 +18,11 @@
           }"
           :style="{order: section.order}"
         >
-          <img :src="section.sectionPhoto" @load="loadedImages.push(index)">
+          <img
+            :src="isMobileVersion ? section.sectionPhotoMobile : section.sectionPhoto"
+            @load="loadedImages.push(index)"
+            :alt="section.name"
+          >
         </div>
       </div>
     </div>
@@ -66,11 +70,15 @@
           }"
           :style="{order: section.order}"
         >
-        <span
-          class="headline-holder__headline__char"
-          v-for="(char, index) in splitText(section.name)"
-          :key="index + 1"
-        >{{char}}</span>
+          <span
+            class="headline-holder__headline__char"
+            v-for="(char, index) in splitText(section.name)"
+            :key="index + 1"
+          >{{char}}</span>
+
+          <span
+            class="headline-holder__headline__char headline-holder__headline__char--mobile"
+          >{{section.name}}</span>
         </h2>
       </div>
 
@@ -92,7 +100,7 @@
         </div>
       </div>
 
-      <button class="a" v-pointer>
+      <button class="open-button" v-pointer>
         <span>Otvoriť</span>
         <router-link  to="galeria/daniel-a-kristina"></router-link>
       </button>
@@ -209,13 +217,14 @@ export default {
       const { dbLoaded } = this.store.loader;
       let percent = 0;
       if (dbLoaded) {
-        percent += 42;
+        percent += 50;
         const imagesCount = this.sections.length;
         const loadedImagesCount = this.loadedImages.length;
-        percent += (loadedImagesCount / imagesCount) * 68;
+        percent += (loadedImagesCount / imagesCount) * 50;
       }
       return percent;
     },
+    isMobileVersion() { return window.innerWidth <= 768; },
   },
   methods: {
     splitText(name) { return [...name]; },
