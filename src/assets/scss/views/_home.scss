@@ -96,11 +96,14 @@ $horizontal_part: 100 / ($horizontal_lines + 1);
     overflow: hidden;
     font-size: 98px;
     position: absolute;
+    top: 0;
+    text-align: center;
     @include breakpoint-1160 { font-size: 72px; }
     @include breakpoint-768 { font-size: 62px; }
     @include breakpoint-586 {
       font-size: 36px;
       width: 100%;
+      left: 0;
     }
 
 

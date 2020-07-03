@@ -152,7 +152,7 @@ export default {
             description: this.description,
             date: this.date,
             place: this.place,
-            photos: [],
+            sections: [],
             storageRef: sectionStoragePath,
             sectionPhoto,
             sectionPhotoMobile,

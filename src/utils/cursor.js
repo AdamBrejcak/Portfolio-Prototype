@@ -20,7 +20,7 @@ export default () => {
   });
 
   window.addEventListener("mousemove", (event) => {
-    mouseX = event.pageX;
-    mouseY = event.pageY;
+    mouseX = event.clientX;
+    mouseY = event.clientY;
   });
 };

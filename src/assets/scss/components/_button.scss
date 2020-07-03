@@ -21,6 +21,10 @@ button {
     border-radius: 50%;
   }
 
+  &.red-button {
+    background-color: $RED;
+  }
+
   &:hover {
     background-color: $BLACK;
   }

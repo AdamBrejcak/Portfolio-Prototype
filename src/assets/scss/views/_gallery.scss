@@ -1,0 +1,66 @@
+$padding_y: 120px;
+$photo_margin: 10px;
+$count_grid: 9;
+
+.gallery {
+  $gallery: &;
+
+  min-width: 100vw;
+  max-width: 100vw;
+  min-height: 100vh;
+  @include sameWidhtHeight(100%);
+  @include fCenter();
+  flex-direction: column;
+  padding: $padding_y 180px 0 180px;
+  margin-bottom: 100px;
+
+  &__template {
+    width: 100%;
+    height: calc(100vh - #{$padding_y});
+    display: grid;
+    grid-template-columns: 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%;
+    grid-template-rows: 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%;
+    @include marginBottom($photo_margin);
+
+    &__photo {
+      background-color: darken($WHITE, 10);
+
+      @for $i from 1 through $count_grid {
+        &--column-start-#{$i} {
+          grid-column-start: $i;
+        }
+      }
+
+      @for $i from 1 through $count_grid {
+        &--column-end-#{$i} {
+          grid-column-end: $i;
+        }
+      }
+
+      @for $i from 1 through $count_grid {
+        &--row-start-#{$i} {
+          grid-row-start: $i;
+        }
+      }
+
+      @for $i from 1 through $count_grid {
+        &--row-end-#{$i} {
+          grid-row-end: $i;
+        }
+      }
+    }
+
+    &--create {
+      background-color: lighten($GRAY, 50);
+      @include fCenter();
+    }
+  }
+
+  &--auth {
+    #{$gallery}__template {
+      transition: all .4s ease;
+      &:hover { background-color: lighten($GRAY, 50); }
+      &--active { background-color: lighten($GRAY, 50); }
+    }
+  }
+}

@@ -14,6 +14,10 @@ body, * {
   @include breakpoint-1160 { display: none!important; }
 }
 
+#app.dark-mode .cursor {
+  background-color: $BLACK;
+}
+
 .cursor-follower {
   position: fixed;
   background-color: rgba($ORANGE, 0.70);

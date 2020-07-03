@@ -105,6 +105,7 @@ export default {
       place: "",
       showValidations: false,
       sectionPhoto: null,
+      templates: [],
       sectionPhotoMobile: null,
       order: 0,
       sectionStoragePath: "",
@@ -158,7 +159,7 @@ export default {
             description: this.description,
             date: this.date,
             place: this.place,
-            photos: [],
+            templates: [],
             storageRef: this.sectionStoragePath,
             sectionPhoto: !this.sectionPhoto ? this.dbSectionPhoto : sectionPhoto,
             sectionPhotoMobile: !this.sectionPhotoMobile
@@ -190,7 +191,7 @@ export default {
       this.date = new Date(foundSection.date.seconds * 1000);
       this.darkMode = foundSection.darkMode;
       this.order = foundSection.order;
-      this.photos = foundSection.photos;
+      this.templates = foundSection.templates;
       this.sectionStoragePath = foundSection.storageRef;
       this.dbSectionPhoto = foundSection.sectionPhoto;
       this.dbSectionPhotoMobile = foundSection.sectionPhotoMobile;

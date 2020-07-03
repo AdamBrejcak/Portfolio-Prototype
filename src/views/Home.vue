@@ -102,7 +102,7 @@
 
       <button class="open-button" v-pointer>
         <span>Otvoriť</span>
-        <router-link  to="galeria/daniel-a-kristina"></router-link>
+        <router-link  :to="`galeria/${sectionID}`"></router-link>
       </button>
     </div>
 
@@ -225,6 +225,13 @@ export default {
       return percent;
     },
     isMobileVersion() { return window.innerWidth <= 768; },
+    sectionID() {
+      if (this.loader.dbLoaded) {
+        const foundSection = this.sections.find((section) => section.order === this.activeSection);
+        return foundSection?.id;
+      }
+      return "";
+    },
   },
   methods: {
     splitText(name) { return [...name]; },
@@ -276,8 +283,11 @@ export default {
     },
   },
   watch: {
-    loadedPercent(percent) {
-      this.store.loader.loadingProgress = percent;
+    loadedPercent: {
+      handler(percent) {
+        this.store.loader.loadingProgress = percent;
+      },
+      immediate: true,
     },
     loaderDone(done) {
       if (done) this.mouseWheelAllow = true;

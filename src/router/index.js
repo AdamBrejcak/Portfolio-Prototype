@@ -5,6 +5,7 @@ import { getters } from "../store";
 import Portfolio from "../views/Porfolio.vue";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
+import Gallery from "../views/Gallery.vue";
 
 Vue.use(VueRouter);
 
@@ -18,6 +19,11 @@ const routes = [
     name: "Portfolio",
     path: "/portfolio",
     component: Portfolio,
+  },
+  {
+    name: "Gallery",
+    path: "/galeria/:id",
+    component: Gallery,
   },
   {
     name: "Login",
@@ -34,18 +40,25 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  getters.store().darkMode = false;
+  const store = getters.store();
+  store.darkMode = false;
 
-  if (to.matched.some((record) => !record.meta.requiresAuth && !record.meta.requiresGuest)) next();
-  if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (!firebase.auth().currentUser) {
-      next({ path: "/login", query: { redirect: to.fullPath } });
-    } else next();
-  } else if (to.matched.some((record) => record.meta.requiresGuest)) {
-    if (firebase.auth().currentUser) {
-      next({ path: "/", query: { redirect: to.fullPath } });
-    } else next();
-  } next();
+  store.loader.showLoader = true;
+  store.loader.loadingProgress = 0;
+  store.loader.loaderDone = false;
+  setTimeout(() => {
+    if (to.matched.some((record) => !record.meta.requiresAuth
+      && !record.meta.requiresGuest)) next();
+    if (to.matched.some((record) => record.meta.requiresAuth)) {
+      if (!firebase.auth().currentUser) {
+        next({ path: "/login", query: { redirect: to.fullPath } });
+      } else next();
+    } else if (to.matched.some((record) => record.meta.requiresGuest)) {
+      if (firebase.auth().currentUser) {
+        next({ path: "/", query: { redirect: to.fullPath } });
+      } else next();
+    } next();
+  }, 1000);
 });
 
 export default router;

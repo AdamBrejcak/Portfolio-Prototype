@@ -7,7 +7,6 @@ $loader-transition: 1s;
   @include sameTopLeft(0);
   @include sameWidhtHeight(100%);
   z-index: 3000;
-  transition-delay: $loader-transition;
 
   &__vertical-line {
     width: 1px;
@@ -51,7 +50,7 @@ $loader-transition: 1s;
       @include wrapper();
       background-color: $BLACK;
       transition: all $loader-transition ease;
-      transition-delay: $loader-transition * 0.8;
+      transform: translateX(0);
     }
   }
 
@@ -92,6 +91,7 @@ $loader-transition: 1s;
   &--hide {
     visibility: hidden;
     pointer-events: none;
+    transition-delay: $loader-transition;
 
     #{$self}__vertical-line {
       transform: translateX(-50%) scale(0);
@@ -100,12 +100,14 @@ $loader-transition: 1s;
     #{$self}__left-side {
       &__background {
         transform: translateX(-100%);
+        transition-delay: $loader-transition * 0.8;
       }
     }
 
     #{$self}__right-side {
       &__background {
         transform: translateX(100%);
+        transition-delay: $loader-transition * 0.8;
       }
     }
   }
