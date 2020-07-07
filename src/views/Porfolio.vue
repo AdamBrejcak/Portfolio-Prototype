@@ -1,14 +1,36 @@
 <template>
   <main>
-      <ul>
-        <li v-for="(section, index) in sections" :key="section.id"
-        @mouseenter="changeImg(index)"
-        @mouseleave="origImg()"
-        >{{section.name}} {{index}}</li>
-        <transition name="fade">
-        <img class="background" :src="link" :key="link">
-        </transition>
-      </ul>
+      <div
+        class="divImg"
+        v-for="(section, index) in sections"
+        :key="section.id"
+      >
+      <transition name="fade">
+        <img
+          class="image"
+          v-show="index === activeSection"
+          :src="section.sectionPhoto"
+          alt="Section Photo"
+        >
+      </transition>
+      <transition name="fade">
+        <img
+          class="image"
+          v-show="activeSection === -1"
+          src="https://images.pexels.com/photos/1122628/pexels-photo-1122628.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+          alt="Section Photo"
+        >
+      </transition>
+      </div>
+    <ul>
+      <li
+        class="list"
+        v-for="(section, index) in sections"
+        :key="section.id"
+        @mouseenter="setSection(index)"
+        @mouseleave="setSection(-1)"
+      >{{section.name}}</li>
+    </ul>
   </main>
 </template>
 
@@ -23,49 +45,47 @@ export default {
   },
   data() {
     return {
-      imageIndex: "",
-      link: "https://images.pexels.com/photos/167684/pexels-photo-167684.jpeg?cs=srgb&dl=alpy-denne-svetlo-diva-priroda-divocina-167684.jpg&fm=jpg",
+      activeSection: -1,
     };
   },
   methods: {
-    mounted() {
-      this.loader.loadingProgress = 100;
+    setSection(index) {
+      this.activeSection = index;
     },
-    changeImg(index) {
-      this.link = this.sections[index].sectionPhoto;
-    },
-    origImg() {
-      this.link = "https://images.pexels.com/photos/167684/pexels-photo-167684.jpeg?cs=srgb&dl=alpy-denne-svetlo-diva-priroda-divocina-167684.jpg&fm=jpg";
-    },
+  },
+  mounted() {
+    this.loader.loadingProgress = 100;
   },
 };
 </script>
 <style lang="scss" scoped>
-  button{
-    width: 50px;
-    height: 30px;
-    background-color: aqua;
-    margin-top: 200px;
-  }
-
-  .background{
+  .image, .divImg{
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    position: fixed;
-    left: 0px;
-    top: 0px;
   }
-
   ul{
     padding-top: 150px;
+    columns: 3;
+    -webkit-columns: 3;
+    -moz-columns: 3;
   }
   li{
-    margin: 30px;
+    padding: 50px;
+    font-size: 30px;
     z-index: 9;
+    text-align: center;
+    opacity: 0.4;
+    transition: 1s;
+    width: auto;
   }
-
+  li:hover{
+    opacity: 1;
+  }
  .fade-enter-active, .fade-leave-active{
-    transition: opacity .7s;
+    transition: opacity .9s;
   }
   .fade-enter, .fade-leave-to{
     opacity: 0;
