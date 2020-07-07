@@ -1,5 +1,6 @@
 body, * {
   cursor: none!important;
+  @include breakpoint-1160 { cursor: initial; }
 }
 
 .cursor {
@@ -10,6 +11,11 @@ body, * {
   z-index: 10000;
   pointer-events: none;
   user-select: none;
+  @include breakpoint-1160 { display: none!important; }
+}
+
+#app.dark-mode .cursor {
+  background-color: $BLACK;
 }
 
 .cursor-follower {
@@ -22,6 +28,7 @@ body, * {
   transform: translate(5px,5px);
   pointer-events: none;
   user-select: none;
+  @include breakpoint-1160 { display: none!important; }
 
   &.cursor-active  {
     transform: translate(5px,5px) scale(3.5);

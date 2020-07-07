@@ -48,6 +48,12 @@
       <template slot="label">Fotografia*</template>
     </file-box>
 
+    <file-box
+      v-model="sectionPhotoMobile"
+    >
+      <template slot="label">Fotografia pre mobil*</template>
+    </file-box>
+
     <ul
       class="modal__content__create-section__validations"
       v-if="errors.length > 0 && showValidations"
@@ -97,6 +103,7 @@ export default {
       place: "",
       showValidations: false,
       sectionPhoto: null,
+      sectionPhotoMobile: null,
     };
   },
   computed: {
@@ -106,6 +113,7 @@ export default {
       if (this.name.length === 0) errors.push("Zabudol si na nazov sekcie.");
       if (!this.date) errors.push("Jaaaj, Aj datum musíš napísať.");
       if (!this.sectionPhoto) errors.push("Uploadni fotku ne.");
+      if (!this.sectionPhotoMobile) errors.push("Uploadni fotku na mobil ne.");
       return errors;
     },
     newOrder() {
@@ -121,6 +129,7 @@ export default {
       this.date = null;
       this.place = "";
       this.sectionPhoto = null;
+      this.sectionPhotoMobile = null;
     },
     async addSection() {
       try {
@@ -133,14 +142,20 @@ export default {
             this.sectionPhoto,
           );
 
+          const sectionPhotoMobile = await uploadFile(
+            `${sectionStoragePath}/${uuidv1()}`,
+            this.sectionPhotoMobile,
+          );
+
           addSection({
             name: this.name,
             description: this.description,
             date: this.date,
             place: this.place,
-            photos: [],
+            sections: [],
             storageRef: sectionStoragePath,
             sectionPhoto,
+            sectionPhotoMobile,
             darkMode: this.darkMode,
             order: this.newOrder,
           });

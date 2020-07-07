@@ -48,6 +48,12 @@
       <template slot="label">Fotografia*</template>
     </file-box>
 
+    <file-box
+      v-model="sectionPhotoMobile"
+    >
+      <template slot="label">Fotografia pre mobil*</template>
+    </file-box>
+
     <ul
       class="modal__content__create-section__validations"
       v-if="errors.length > 0 && showValidations"
@@ -99,9 +105,12 @@ export default {
       place: "",
       showValidations: false,
       sectionPhoto: null,
+      templates: [],
+      sectionPhotoMobile: null,
       order: 0,
       sectionStoragePath: "",
       dbSectionPhoto: "",
+      dbSectionPhotoMobile: "",
       id: "",
     };
   },
@@ -122,6 +131,7 @@ export default {
       this.date = null;
       this.place = "";
       this.sectionPhoto = null;
+      this.sectionPhotoMobile = null;
     },
     async updateSection() {
       try {
@@ -136,14 +146,25 @@ export default {
             );
           }
 
+          let sectionPhotoMobile;
+          if (this.sectionPhotoMobile) {
+            sectionPhotoMobile = await uploadFile(
+              `${this.sectionStoragePath}/${uuidv1()}`,
+              this.sectionPhotoMobile,
+            );
+          }
+
           updateSection({
             name: this.name,
             description: this.description,
             date: this.date,
             place: this.place,
-            photos: [],
+            templates: [],
             storageRef: this.sectionStoragePath,
             sectionPhoto: !this.sectionPhoto ? this.dbSectionPhoto : sectionPhoto,
+            sectionPhotoMobile: !this.sectionPhotoMobile
+              ? this.dbSectionPhotoMobile
+              : sectionPhotoMobile,
             darkMode: this.darkMode,
             order: this.order,
             id: this.id,
@@ -170,9 +191,10 @@ export default {
       this.date = new Date(foundSection.date.seconds * 1000);
       this.darkMode = foundSection.darkMode;
       this.order = foundSection.order;
-      this.photos = foundSection.photos;
+      this.templates = foundSection.templates;
       this.sectionStoragePath = foundSection.storageRef;
       this.dbSectionPhoto = foundSection.sectionPhoto;
+      this.dbSectionPhotoMobile = foundSection.sectionPhotoMobile;
       this.id = foundSection.id;
     }
   },

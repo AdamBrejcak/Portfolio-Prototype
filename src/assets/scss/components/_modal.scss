@@ -26,9 +26,12 @@
     overflow-y: auto;
     &::-webkit-scrollbar { display: none; }
 
-    &__create-section {
+    > div {
       > * { @include marginBottom(20px); }
+    }
 
+
+    &__create-section {
       &__validations {
         margin-left: 20px;
         color: $RED;
@@ -50,10 +53,12 @@
     border-radius: 50%;
     color: $WHITE;
     font-weight: 700;
+    transition: all .6s ease;
+    &:hover { background-color: $BLACK; }
   }
 
   &--show {
-    box-shadow: -2px 2px 31px 11px rgba($WHITE, 0.1);
+    box-shadow: -2px 2px 31px 11px rgba($BLACK, 0.15);
     padding: 30px;
     transform: scale(1);
 

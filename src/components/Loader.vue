@@ -51,6 +51,7 @@ export default {
     ...getters,
     loadingProgress() { return this.loader.loadingProgress; },
     showLoadingProgress() { return this.animatePercent > 0 && this.animatePercent < 100; },
+    loaderDone() { return this.loader.loaderDone; },
   },
   watch: {
     /*
@@ -77,6 +78,12 @@ export default {
       if (newPercent === 100) {
         this.loader.showLoader = false;
         setTimeout(() => { this.loader.loaderDone = true; }, 800);
+      }
+    },
+    loaderDone(show) {
+      if (!show) {
+        this.interval = null;
+        this.animatePercent = 0;
       }
     },
   },

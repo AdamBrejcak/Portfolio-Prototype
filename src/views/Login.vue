@@ -1,24 +1,26 @@
 <template>
   <form class="login" @submit.prevent="login">
-    <p v-if="error.length > 0">{{error}}</p>
+    <div>
+      <p v-if="error.length > 0">{{error}}</p>
 
-    <input-box
-      v-model="email"
-      type="email"
-      placeholder="email"
-    >
-      <template slot="label">Email</template>
-    </input-box>
+      <input-box
+        v-model="email"
+        type="email"
+        placeholder="email"
+      >
+        <template slot="label">Email</template>
+      </input-box>
 
-    <input-box
-      v-model="password"
-      type="password"
-      placeholder="Heslo"
-    >
-      <template slot="label">Heslo</template>
-    </input-box>
+      <input-box
+        v-model="password"
+        type="password"
+        placeholder="Heslo"
+      >
+        <template slot="label">Heslo</template>
+      </input-box>
 
-    <button v-pointer type="submit" class="white-hover">Prihlásiť sa</button>
+      <button v-pointer type="submit" class="white-hover">Prihlásiť sa</button>
+    </div>
   </form>
 </template>
 

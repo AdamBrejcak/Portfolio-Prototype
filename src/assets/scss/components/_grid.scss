@@ -1,6 +1,9 @@
 $horizontal_lines: 3;
 $vertical_lines: 5;
 
+$horizontal_lines_768: 2;
+$vertical_lines_768: 3;
+
 @mixin renderGridLinesPosition($vertical, $lines_count) {
   @for $i from 1 through $lines_count {
     $column_size: 100 / ($lines_count + 1);
@@ -48,6 +51,10 @@ $vertical_lines: 5;
       width: 1px;
       transform-origin: center top;
       @include renderGridLinesPosition(true, $vertical_lines);
+      @include breakpoint-768 {
+        @include renderGridLinesPosition(true, $vertical_lines_768);
+        &:nth-child(4), &:nth-child(5) { display: none; }
+      }
     }
   }
 
@@ -58,6 +65,10 @@ $vertical_lines: 5;
       height: 1px;
       transform-origin: left center;
       @include renderGridLinesPosition(false, $horizontal_lines);
+      @include breakpoint-768 {
+        @include renderGridLinesPosition(false, $horizontal_lines_768);
+        &:nth-child(3) { display: none; }
+      }
     }
   }
 

@@ -2,6 +2,7 @@
 @import "./dependencies/functions";
 @import "./dependencies/mixins";
 @import "./dependencies/reset";
+@import "./dependencies/breakpoints";
 
 @import "./layout";
 @import "./typography";
@@ -10,6 +11,7 @@
 // Views
 @import "./views/home";
 @import "./views/login";
+@import "./views/gallery";
 
 // Components
 @import "./components/grid";
@@ -22,3 +24,5 @@
 @import "./components/radio-box";
 @import "./components/file-box";
 @import "./components/mini_loader";
+@import "./components/range";
+@import "./components/photo_update";
