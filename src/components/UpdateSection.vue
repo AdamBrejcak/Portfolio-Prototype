@@ -26,22 +26,6 @@
       <template slot="label">Dátum*</template>
     </datepicker-box>
 
-    <input-box
-      v-model="description"
-      placeholder="Popis"
-      class="input-box--white"
-    >
-      <template slot="label">Popis sekcie</template>
-    </input-box>
-
-    <input-box
-      v-model="place"
-      placeholder="Miesto"
-      class="input-box--white"
-    >
-      <template slot="label">Miesto</template>
-    </input-box>
-
     <file-box
       v-model="sectionPhoto"
     >
@@ -100,9 +84,7 @@ export default {
       loading: false,
       darkMode: false,
       name: "",
-      description: "",
       date: null,
-      place: "",
       showValidations: false,
       sectionPhoto: null,
       templates: [],
@@ -127,9 +109,7 @@ export default {
     resetForm() {
       this.showValidations = false;
       this.name = "";
-      this.description = "";
       this.date = null;
-      this.place = "";
       this.sectionPhoto = null;
       this.sectionPhotoMobile = null;
     },
@@ -156,9 +136,7 @@ export default {
 
           updateSection({
             name: this.name,
-            description: this.description,
             date: this.date,
-            place: this.place,
             templates: [],
             storageRef: this.sectionStoragePath,
             sectionPhoto: !this.sectionPhoto ? this.dbSectionPhoto : sectionPhoto,
@@ -186,8 +164,6 @@ export default {
     const foundSection = this.sections.find((section) => section.order === this.activeSection);
     if (foundSection) {
       this.name = foundSection.name;
-      this.description = foundSection.description;
-      this.place = foundSection.place;
       this.date = new Date(foundSection.date.seconds * 1000);
       this.darkMode = foundSection.darkMode;
       this.order = foundSection.order;

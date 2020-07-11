@@ -100,7 +100,7 @@
         </div>
       </div>
 
-      <button class="open-button" v-pointer>
+      <button v-if="store.sections.length > 0" class="open-button" v-pointer>
         <span>Otvoriť</span>
         <router-link  :to="`galeria/${sectionID}`"></router-link>
       </button>
@@ -151,7 +151,7 @@
     <span
       class="update-section-button"
       v-pointer
-      v-if="store.isAuth"
+      v-if="store.isAuth && store.sections.length > 0"
       @click="showUpdateModal = true"
       :class="{'create-section-button--hide': showUpdateModal}"
     >UPRAVIŤ</span>
@@ -219,6 +219,7 @@ export default {
       if (dbLoaded) {
         percent += 50;
         const imagesCount = this.sections.length;
+        if (imagesCount === 0) return 100;
         const loadedImagesCount = this.loadedImages.length;
         percent += (loadedImagesCount / imagesCount) * 50;
       }

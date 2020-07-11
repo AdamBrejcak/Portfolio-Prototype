@@ -26,22 +26,6 @@
       <template slot="label">Dátum*</template>
     </datepicker-box>
 
-    <input-box
-      v-model="description"
-      placeholder="Popis"
-      class="input-box--white"
-    >
-      <template slot="label">Popis sekcie</template>
-    </input-box>
-
-    <input-box
-      v-model="place"
-      placeholder="Miesto"
-      class="input-box--white"
-    >
-      <template slot="label">Miesto</template>
-    </input-box>
-
     <file-box
       v-model="sectionPhoto"
     >
@@ -98,9 +82,7 @@ export default {
       loading: false,
       darkMode: false,
       name: "",
-      description: "",
       date: null,
-      place: "",
       showValidations: false,
       sectionPhoto: null,
       sectionPhotoMobile: null,
@@ -117,6 +99,7 @@ export default {
       return errors;
     },
     newOrder() {
+      if (this.sections.length === 0) return 0;
       const orders = this.sections.map((section) => section.order);
       return Math.max(...orders) + 1;
     },
@@ -125,9 +108,7 @@ export default {
     resetForm() {
       this.showValidations = false;
       this.name = "";
-      this.description = "";
       this.date = null;
-      this.place = "";
       this.sectionPhoto = null;
       this.sectionPhotoMobile = null;
     },
@@ -149,16 +130,15 @@ export default {
 
           addSection({
             name: this.name,
-            description: this.description,
             date: this.date,
-            place: this.place,
-            sections: [],
+            templates: [],
             storageRef: sectionStoragePath,
             sectionPhoto,
             sectionPhotoMobile,
             darkMode: this.darkMode,
             order: this.newOrder,
           });
+
           this.resetForm();
           this.$emit("close");
           this.loading = false;

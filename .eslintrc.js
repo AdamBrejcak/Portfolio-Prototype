@@ -13,6 +13,7 @@ module.exports = {
   rules: {
     "no-console": "off",
     "no-alert": "off",
+    "no-restricted-globals": "off",
     "no-debugger": "off",
     "lines-between-class-members": "off",
     "class-methods-use-this": "off",
