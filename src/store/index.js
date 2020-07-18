@@ -15,6 +15,7 @@ const store = Vue.observable({
   },
   isAuth: false,
   darkMode: false,
+  enableMobileEditing: false,
   sections: [],
 });
 

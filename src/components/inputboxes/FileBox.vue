@@ -31,7 +31,6 @@ export default {
   ],
   watch: {
     value(newFile) {
-      console.log(newFile);
       if (!newFile) this.$refs.file.value = "";
     },
   },

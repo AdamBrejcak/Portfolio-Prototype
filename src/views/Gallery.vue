@@ -1,21 +1,29 @@
 <template>
   <div
     class="gallery"
-    :class="{'gallery--auth': store.isAuth}"
+    :class="{
+      'gallery--auth': store.isAuth,
+      'gallery--mobile-version': store.enableMobileEditing
+    }"
     v-if="section"
   >
     <!-- ------------------ Template ------------------ -->
-    <div
+    <gallery-template
       class="gallery__template"
       v-for="(template, index) in section.templates"
       :key="index + 1"
-      :class="{'gallery__template--active': index === activeTemplateIndex}"
-      @click="showModal(index)"
+      :template="template"
+      :index="index"
+      :activeTemplateIndex="activeTemplateIndex"
+      @showModal="showModal(index)"
     >
-    </div>
+    </gallery-template>
 
     <!-- ------------------ Push template ------------------ -->
-    <div class="gallery__template gallery__template--create">
+    <div
+      class="gallery__template gallery__template--create"
+      v-if="store.isAuth"
+    >
       <button
         v-pointer
         @click="addTemplate"
@@ -39,7 +47,10 @@
       <div class="modal__content">
         <update-template
           v-if="activeTemplate"
+          :section="section"
           :template="activeTemplate"
+          @remove="removeTemplate"
+          @hide="hideModal"
         ></update-template>
       </div>
     </div>
@@ -49,12 +60,14 @@
 <script>
 import { getters } from "../store";
 import UpdateTemplate from "../components/UpdateTemplate.vue";
+import GalleryTemplate from "../components/Template.vue";
 import DB from "../firebaseInit";
 
 export default {
   name: "Gallery",
   components: {
     UpdateTemplate,
+    GalleryTemplate,
   },
   data() {
     return {
@@ -83,8 +96,9 @@ export default {
       try {
         this.section.templates.push({
           photos: [],
-          isResponsive: false,
           responsivePhotos: [],
+          ratio: 0.5625,
+          responsiveRatio: 1.7787,
         });
 
         await DB
@@ -103,7 +117,24 @@ export default {
     },
     hideModal() {
       this.activeTemplateIndex = -1;
+      this.store.enableMobileEditing = false;
       this.modalVisible = false;
+    },
+    removeTemplate() {
+      try {
+        const code = Math.floor(Math.random() * 10000);
+        const promptRes = prompt(`Vpíš kód ${code}`);
+        if (promptRes && promptRes.toUpperCase() === code.toString().toUpperCase()) {
+          this.section.templates.splice(this.activeTemplateIndex, 1);
+          DB
+            .collection("section")
+            .doc(this.section.id)
+            .set(this.section);
+          this.hideModal();
+        }
+      } catch (err) {
+        alert(err);
+      }
     },
   },
   watch: {

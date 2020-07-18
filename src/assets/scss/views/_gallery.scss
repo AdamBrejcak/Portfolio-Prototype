@@ -1,5 +1,4 @@
 $padding_y: 120px;
-$photo_margin: 10px;
 $count_grid: 9;
 
 .gallery {
@@ -11,8 +10,15 @@ $count_grid: 9;
   @include sameWidhtHeight(100%);
   @include fCenter();
   flex-direction: column;
-  padding: $padding_y 180px 0 180px;
+  padding: $padding_y 120px 0 120px;
   margin-bottom: 100px;
+  @include breakpoint-1160 {
+    padding: $padding_y 30px 0 30px;
+  }
+
+  @include breakpoint-586 {
+    padding: $padding_y 10px 0 10px;
+  }
 
   &__template {
     width: 100%;
@@ -20,10 +26,15 @@ $count_grid: 9;
     display: grid;
     grid-template-columns: 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%;
     grid-template-rows: 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%;
-    @include marginBottom($photo_margin);
 
     &__photo {
-      background-color: darken($WHITE, 10);
+      padding: 5px;
+
+      img {
+        @include sameTopLeft(0);
+        @include sameWidhtHeight(100%);
+        object-fit: cover;
+      }
 
       @for $i from 1 through $count_grid {
         &--column-start-#{$i} {
@@ -61,6 +72,16 @@ $count_grid: 9;
       transition: all .4s ease;
       &:hover { background-color: lighten($GRAY, 50); }
       &--active { background-color: lighten($GRAY, 50); }
+      &__photo {
+        background-color: darken($WHITE, 10);
+      }
     }
+  }
+
+  &--mobile-version {
+    width: 375px;
+    max-width: 375px;
+    min-width: 375px;
+    padding: 10px 10px 0 10px;
   }
 }
