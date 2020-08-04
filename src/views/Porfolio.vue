@@ -22,7 +22,7 @@
         >
       </transition>
       </div>
-    <ul>
+    <ul :style="{columns:`${this.columns}`}">
       <li
         class="list"
         v-for="(section, index) in sections"
@@ -46,15 +46,23 @@ export default {
   data() {
     return {
       activeSection: -1,
+      columns: 1,
     };
+  },
+  mounted() {
+    this.loader.loadingProgress = 100;
+    if (this.sections.length === 1) {
+      this.columns = 1;
+    } else if (this.sections.length % 2 === 0) {
+      this.columns = 2;
+    } else {
+      this.columns = 3;
+    }
   },
   methods: {
     setSection(index) {
       this.activeSection = index;
     },
-  },
-  mounted() {
-    this.loader.loadingProgress = 100;
   },
 };
 </script>
@@ -68,20 +76,19 @@ export default {
   }
   ul{
     padding-top: 150px;
-    columns: 3;
-    -webkit-columns: 3;
-    -moz-columns: 3;
   }
   li{
     padding: 50px;
     font-size: 30px;
     z-index: 9;
     text-align: center;
-    opacity: 0.4;
     transition: 1s;
     width: auto;
   }
-  li:hover{
+  ul:hover > li{
+    opacity: 0.5;
+  }
+  ul:hover li:hover{
     opacity: 1;
   }
  .fade-enter-active, .fade-leave-active{
