@@ -24,18 +24,20 @@
       </div>
     <ul :style="{columns:`${this.columns}`}">
       <li
+      v-pointer
         class="list"
         v-for="(section, index) in sections"
         :key="section.id"
+      >
+      <span
         @mouseenter="setSection(index)"
         @mouseleave="setSection(-1)"
-      >{{section.name}}</li>
+      >{{section.name}}</span></li>
     </ul>
   </main>
 </template>
 
 <script>
-// import DB from "../firebaseInit";
 import { getters } from "../store";
 
 export default {
@@ -73,9 +75,13 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
+    background-size:cover;
+    background-repeat: no-repeat;
+    object-fit: cover;
   }
   ul{
-    padding-top: 150px;
+    padding-top: 180px;
+    pointer-events: none;
   }
   li{
     padding: 50px;
@@ -83,7 +89,12 @@ export default {
     z-index: 9;
     text-align: center;
     transition: 1s;
-    width: auto;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 0 0;;
+  }
+  ul > * {
+    pointer-events: auto;
   }
   ul:hover > li{
     opacity: 0.5;
