@@ -22,17 +22,18 @@
         >
       </transition>
       </div>
-    <ul :style="{columns:`${this.columns}`}">
+    <ul
+    resize="console.log(window.innerWidth)"
+    :style="columns">
       <li
-      v-pointer
-        class="list"
+        v-pointer
         v-for="(section, index) in sections"
         :key="section.id"
       >
-      <span
+      <router-link  :to="`galeria/${section.id}`"><span
         @mouseenter="setSection(index)"
         @mouseleave="setSection(-1)"
-      >{{section.name}}</span></li>
+      >{{section.name}}</span></router-link></li>
     </ul>
   </main>
 </template>
@@ -44,22 +45,21 @@ export default {
   name: "Portfolio",
   computed: {
     ...getters,
+    columns() {
+      console.log(window.innerWidth);
+      if (this.sections.length === 1 || window.innerWidth < 600) {
+        return { columns: 1 };
+      }
+      return { columns: 2 };
+    },
   },
   data() {
     return {
       activeSection: -1,
-      columns: 1,
     };
   },
   mounted() {
     this.loader.loadingProgress = 100;
-    if (this.sections.length === 1) {
-      this.columns = 1;
-    } else if (this.sections.length % 2 === 0) {
-      this.columns = 2;
-    } else {
-      this.columns = 3;
-    }
   },
   methods: {
     setSection(index) {
