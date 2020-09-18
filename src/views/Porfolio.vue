@@ -91,7 +91,7 @@ export default {
     transition: 1s;
     width: fit-content;
     margin: 0 auto;
-    padding: 0 0;;
+    padding: 25px 0;;
   }
   ul > * {
     pointer-events: auto;
