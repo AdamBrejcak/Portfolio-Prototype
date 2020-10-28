@@ -6,6 +6,7 @@ import Portfolio from "../views/Porfolio.vue";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import Gallery from "../views/Gallery.vue";
+import PageNotFound from "../views/PageNotFound.vue";
 
 Vue.use(VueRouter);
 
@@ -33,9 +34,11 @@ const routes = [
       requiresGuest: true,
     },
   },
+  { path: "*", component: PageNotFound },
 ];
 
 const router = new VueRouter({
+  mode: "history",
   routes,
 });
 

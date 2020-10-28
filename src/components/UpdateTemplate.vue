@@ -20,6 +20,7 @@
         :key="index + 1"
         :index="index"
         :photo="photo"
+        :template="template"
       ></update-photo>
 
       <number-box
@@ -47,6 +48,7 @@
         :key="index + 1"
         :index="index"
         :photo="photo"
+        :template="template"
       ></update-photo>
 
       <number-box

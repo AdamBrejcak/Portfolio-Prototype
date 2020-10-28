@@ -90,6 +90,7 @@ export default {
       if (this.activeTemplateIndex === -1) return undefined;
       return this.section.templates[this.activeTemplateIndex];
     },
+
   },
   methods: {
     async addTemplate() {

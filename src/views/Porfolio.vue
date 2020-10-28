@@ -23,7 +23,7 @@
       </transition>
       </div>
     <ul
-    resize="console.log(window.innerWidth)"
+
     :style="columns">
       <li
         v-pointer
@@ -46,7 +46,6 @@ export default {
   computed: {
     ...getters,
     columns() {
-      console.log(window.innerWidth);
       if (this.sections.length === 1 || window.innerWidth < 600) {
         return { columns: 1 };
       }
@@ -75,7 +74,7 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    background-size:cover;
+    background-size: cover;
     background-repeat: no-repeat;
     object-fit: cover;
   }
