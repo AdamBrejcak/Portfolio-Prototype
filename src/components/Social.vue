@@ -27,14 +27,3 @@ export default {
   name: "Social",
 };
 </script>
-<style lang="scss" scoped>
- div > * {
-    pointer-events: auto;
-  }
-  div:hover > a{
-    opacity: 0.5;
-  }
-  div:hover a:hover{
-    opacity: 1;
-  }
-</style>

@@ -6,12 +6,12 @@
 
 @mixin breakpoint-768 {
   @media (max-width: 768px) {
-    @content
+    @content;
   }
 }
 
 @mixin breakpoint-586 {
   @media (max-width: 586px) {
-    @content
+    @content;
   }
 }

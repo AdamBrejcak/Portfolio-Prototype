@@ -1,7 +1,7 @@
 <template>
   <div class="photo-update">
     <h4>Fotografia {{index + 1}}
-      <button @click="deleteImage" class="small-button">Zmazať</button>
+      <button @click="deleteImage" class="small-button to-right">Vymazať fotografiu</button>
     </h4>
 
     <range-box
@@ -121,15 +121,8 @@ export default {
   },
   methods: {
     deleteImage() {
-      // console.log(this.template.photos[this.index]);
       this.template.photos.splice(this.index, 1);
     },
   },
 };
 </script>
-<style lang="scss" scoped>
-  .delete{
-    width: 30px;
-    height: 15px;
-  }
-</style>

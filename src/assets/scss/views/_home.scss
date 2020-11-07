@@ -6,6 +6,7 @@ $horizontal_part: 100 / ($horizontal_lines + 1);
 
 .home {
   position: fixed;
+  
   @include sameTopLeft(0);
   @include sameWidhtHeight(100%);
 }

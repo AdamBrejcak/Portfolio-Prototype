@@ -54,5 +54,13 @@ export default {
 </script>
 
 <style lang="scss">
+/* Hide scrollbar for Chrome, Safari and Opera */
+body::-webkit-scrollbar{
+  display: none; /*Chrome, safari opera */
+}
+body{
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
   @import "assets/scss/app";
 </style>

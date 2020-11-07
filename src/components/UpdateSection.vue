@@ -53,13 +53,18 @@
       @click="updateSection"
       v-pointer
     >Upraviť sekciu</button>
-
+    <button
+      class="small-button to-right"
+      @click="deleteSection"
+      v-pointer
+    >Vymazať sekciu</button>
     <mini-loader v-if="loading"></mini-loader>
   </div>
 </template>
 
 <script>
 import { v1 as uuidv1 } from "uuid";
+import DB from "../firebaseInit";
 import { getters, updateSection, uploadFile } from "../store";
 import RadioBox from "./inputboxes/RadioBox.vue";
 import InputBox from "./inputboxes/InputBox.vue";
@@ -159,7 +164,27 @@ export default {
         console.error(err);
       }
     },
+
+    async deleteSection() {
+      const foundSection = this.sections.find((section) => section.order === this.activeSection);
+      console.log(foundSection);
+
+      const code = Math.floor(Math.random() * 10000);
+      const promptRes = prompt(`Vpíš kód ${code}`);
+      if (promptRes && promptRes.toUpperCase() === code.toString().toUpperCase()) {
+        this.store.sections.splice(this.activeSection, 1);
+        await DB.collection("section").doc(foundSection.id).delete().then(() => {
+          console.log("Document successfully deleted!");
+          this.$router.go();
+        })
+          .catch((error) => {
+            console.error("Error removing document: ", error);
+          });
+      }
+    },
   },
+
+
   mounted() {
     const foundSection = this.sections.find((section) => section.order === this.activeSection);
     if (foundSection) {

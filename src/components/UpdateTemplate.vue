@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>Šablóna</h3>
+    <h3>Šablóna {{activeTemplateIndex + 1}}</h3>
 
     <radio-box
       v-model="responsive"
@@ -78,7 +78,7 @@
         class="red-button small-button"
         v-pointer
         @click="$emit('remove')"
-      >Vymazať</button>
+      >Vymazať šablónu</button>
     </div>
 
     <mini-loader v-if="loading"></mini-loader>
@@ -104,6 +104,7 @@ export default {
   props: [
     "template",
     "section",
+    "activeTemplateIndex",
   ],
   data() {
     return {
@@ -113,6 +114,9 @@ export default {
   },
   computed: {
     ...getters,
+  },
+  mounted() {
+    console.log(this.section);
   },
   methods: {
     addPhoto() {

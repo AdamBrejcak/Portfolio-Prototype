@@ -1,0 +1,52 @@
+  .image, .divImg{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    object-fit: cover;
+  }
+  ul{
+    padding-top: 180px;
+    pointer-events: none;
+    columns: 2;
+    @include breakpoint-586 {
+      columns: 1;
+    }
+  }
+  li{
+    padding: 50px;
+    font-size: 30px;
+    z-index: 9;
+    text-align: center;
+    transition: 1s;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 25px 0;
+    @include breakpoint-586 {
+      padding: 40px;
+      font-size: 24px; 
+    }
+  }
+  ul > * {
+    pointer-events: auto;
+  }
+  ul:hover > li{
+    opacity: 0.5;
+  }
+  ul:hover li:hover{
+    opacity: 1;
+  }
+ .fade-enter-active, .fade-leave-active{
+    transition: opacity .9s;
+  }
+  .fade-enter, .fade-leave-to{
+    opacity: 0;
+  }
+  .to-right{
+    float: right;
+    background-color: $RED;
+  }
+  

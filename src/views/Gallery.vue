@@ -49,6 +49,7 @@
           v-if="activeTemplate"
           :section="section"
           :template="activeTemplate"
+          :activeTemplateIndex="activeTemplateIndex"
           @remove="removeTemplate"
           @hide="hideModal"
         ></update-template>
