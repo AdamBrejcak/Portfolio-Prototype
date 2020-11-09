@@ -6,9 +6,10 @@
     @click="$emit('showModal')"
     ref="template"
   >
+  <!-- vo v-for cykle, v pripade ak je iba "in photos", nezobrazuje fotky v mobilnej verzii -->
     <div
       class="gallery__template__photo"
-      v-for="(photo, index) in photos"
+      v-for="(photo, index) in template.photos"
       :key="index + 1"
       :class="[
         `gallery__template__photo--column-start-${photo.columnStart}`,
